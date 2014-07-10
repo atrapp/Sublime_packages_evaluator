@@ -1,3 +1,5 @@
 class User < ActiveRecord::Base
-  has_many  :reviews
+  authenticates_with_sorcery!
+
+  
 end
