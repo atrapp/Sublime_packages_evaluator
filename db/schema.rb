@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710215534) do
+ActiveRecord::Schema.define(version: 20140711153353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,9 +22,12 @@ ActiveRecord::Schema.define(version: 20140710215534) do
   end
 
   create_table "reviews", force: true do |t|
-    t.string "description"
-    t.string "platform"
-    t.date   "datetime"
+    t.string  "description"
+    t.string  "platform"
+    t.date    "datetime"
+    t.integer "user_id"
+    t.integer "package_id"
+    t.string  "title"
   end
 
   create_table "users", force: true do |t|
@@ -33,6 +36,8 @@ ActiveRecord::Schema.define(version: 20140710215534) do
     t.string   "salt",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "username"
+    t.string   "avatar_url"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
