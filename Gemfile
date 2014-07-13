@@ -52,7 +52,6 @@ gem 'omniauth-twitter'
 
 gem "twitter-bootstrap-rails"
 
-
-
+gem 'backbone-on-rails'
 
 

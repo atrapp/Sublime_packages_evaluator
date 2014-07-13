@@ -3,3 +3,23 @@
 <h2>
     Welcome <%= current_user ? 'User!' : '(unkown user)' %>
 </h2>
+
+
+    <h2>Users</h2>
+
+    <form class="user-form"> 
+      <input type="text" name="user-email" placeholder="Email address...">       
+    </form>
+
+    <ul class="users">
+    </ul>
+
+
+    <h2>Packages</h2>
+
+    <form class="package-form"> 
+      <input type="text" name="package-name" placeholder="Package name...">       
+    </form>
+
+    <ul class="packages">
+    </ul>
