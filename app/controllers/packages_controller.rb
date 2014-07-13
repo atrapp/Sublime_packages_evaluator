@@ -1,5 +1,7 @@
 class PackagesController < ApplicationController
 
+require 'sublime'
+
   def index
     packages = Package.all
     render json: packages.to_json
@@ -26,6 +28,15 @@ class PackagesController < ApplicationController
     package.destroy
     render json: package.to_json
   end
+
+  def search
+    package = Sublime.find_package( params[:package_name] )   
+    
+    unless package == nil
+      render json: package.to_json     
+    end
+  end
+
 
   private
 

@@ -1,139 +1,99 @@
-// determines the definite load order of files
-var SublimePackagesEvaluatorapp = SublimePackagesEvaluatorapp || { Models: {}, Collections: {}, Views: {} };
 
+// ************ Model *************
+function Package(packageJSON){
+  this.name = packageJSON.name;
+  this.description = packageJSON.highlighted_description;  
+  this.author = packageJSON.author;
+  this.platforms = packageJSON.platforms;
+  this.downloads = packageJSON.unique_installs;
+  this.installs_rank = packageJSON.installs_rank;
+  this.rating = "3";  
+}
 
-SublimePackagesEvaluatorapp.initialize = function(){
+// ************ View *************
+function PackageView(model){
+  this.model = model;
+  this.el = undefined;
+}
 
-//************************
-// ******   USER    ******
-//************************
-  var userCollection = new SublimePackagesEvaluatorapp.Collections.UserCollection();
+PackageView.prototype.render = function(){
+  var newElement = $('<li>').html("<a href=\"https://sublime.wbond.net/packages/" + this.model.name + "\" target=\"_blank\">" + this.model.name + "</a>" + '</br>' + 
+                                  this.model.description + '</br>' +
+                                  this.model.author + '</br>' +
+                                  this.model.platforms + '</br>' +
+                                  this.model.downloads + '</br>' +
+                                  this.model.installs_rank + '</br>' +
+                                  this.model.rating + '</br>');
+  this.el = newElement;
+  return this;
+}
 
-  var userListView = new SublimePackagesEvaluatorapp.Views.UserListView({
-    collection: userCollection,
-    el: $('.users')  // ==> this connects the collection to the ul in index.html AND puts it on the page !!!! go to 2
-  });
+// ************ Collection *************
+function PackageCollection(){
+  this.models = {};
+}
 
-  userCollection.fetch(); // ***   add userCollection.fetch() for connecting Backbone with Rails   ***
+// ************ Add Package to Collection *************
+PackageCollection.prototype.add = function(packageJSON){
+  var newPackage = new Package(packageJSON);
+  this.models[packageJSON.name] = newPackage;
+  $(this).trigger('addFlare');     // shoot up in the air that add flare
+  return this;
+}
 
-  $('form.user-form').on('submit', function(e){
-    e.preventDefault();
-    var emailField = $("form.user-form input[name='user-email'")
-    var newEmail = emailField.val();
-    emailField.val('');
-    // userCollection.add({email: newEmail}); 
-    userCollection.create({email: newEmail});    // ***   add --> create for connecting Backbone with Rails   ***
-  });
+// PackageCollection.prototype.create = function(paramObject){
+//   var that = this;
+//    $.ajax({
+//     url: '/search',
+//     method: 'post',
+//     dataType: 'json',
+//     data: {package: paramObject},
+//     success: function(data){
+//       that.add(data);
+//     }
+//    })
+// }
 
-//****************************
-// ******   PACKAGES    ******
-//****************************
- var packageCollection = new SublimePackagesEvaluatorapp.Collections.PackageCollection();
-
-  var packageListView = new SublimePackagesEvaluatorapp.Views.PackageListView({
-    collection: packageCollection,
-    el: $('.packages')  // ==> this connects the collection to the ul in index.html AND puts it on the page !!!! go to 2
-  });
-
-  packageCollection.fetch(); // ***   add packageCollection.fetch() for connecting Backbone with Rails   ***
-
-  $('form.package-form').on('submit', function(e){
-    e.preventDefault();
-
-    var nameField = $("form.package-form input[name='package-name'")
-    var newName = nameField.val();
-    nameField.val('');
-
-    // var ratingField = $("form.package-form input[name='package-rating'")
-    // var newRating = ratingField.val();
-    // ratingField.val('');
-    var newRating = "3";    
-
-    // packageCollection.add({name: newName, rating: newRating}); 
-    packageCollection.create({name: newName, rating: newRating});    // ***   add --> create for connecting Backbone with Rails   ***
-  });
-
-//***************************
-// ******   REVIEWS    ******
-//***************************
-  var reviewCollection = new SublimePackagesEvaluatorapp.Collections.ReviewCollection();
-
-  var reviewListView = new SublimePackagesEvaluatorapp.Views.ReviewListView({
-    collection: reviewCollection,
-    el: $('.reviews')  // ==> this connects the collection to the ul in index.html AND puts it on the page !!!! go to 2
-  });
-
-  reviewCollection.fetch(); // ***   add reviewCollection.fetch() for connecting Backbone with Rails   ***
-
-  $('form.review-form').on('submit', function(e){
-    e.preventDefault();
-
-    var titleField = $("form.review-form input[name='review-title'")
-    var newTitle = titleField.val();
-    titleField.val('');
-
-    var descriptionField = $("form.review-form #description")
-    var newDescription = descriptionField.val();
-    descriptionField.val('');
-
-    var platformField = $("form.review-form input[name='review-platform']:checked")    
-    switch(platformField.val()) {
-      case "win":
-        var newPlatform = "win";
-        break;
-      case "osx":
-        var newPlatform = "osx";
-        break;
-      case "linux":
-        var newPlatform = "linux";
-        break;
-      default:    
-    }    
-    platformField.prop('checked', false);
-
-    var ratingField = $("form.review-form input[name='review-rating']:checked")    
-    switch(ratingField.val()) {
-      case "1":
-        var newRating = "1";
-        break;
-      case "2":
-        var newRating = "2";
-        break;
-      case "3":
-        var newRating = "3";
-        break;
-      case "4":
-        var newRating = "4";
-        break;
-      case "5":
-        var newRating = "5";
-        break;
-      default:    
-    }    
-    ratingField.prop('checked', false);
-
-    var dateNow = new Date();  
-    var newDateTime = dateNow.toLocaleDateString();
-    // var dmy = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    // var dmy = dateNow.toLocaleDateString();
-    // var hh = dateNow.getHours(); 
-    // var mm = dateNow.getMinutes();
-    // var newDateTime = dmy + ', ' + hh + ':' + mm;
-
-    // reviewCollection.add({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
-    // ***   add --> create for connecting Backbone with Rails   ***
-
-    reviewCollection.create({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
-
-});
-
-
-//**************************************************
-
+// ************ Get Packages from Sublime *************
+PackageCollection.prototype.fetch = function(packageName){
+  var that = this;
+  $.ajax({
+    url: '/search?package_name='+packageName,
+    dataType: 'json',
+    success: function(data){
+      for (idx in data){         
+        that.add(data[idx]);
+      }
+    }
+  })
 };
 
+function clearAndDisplayPackageList(){
+  $('.packages').html('');
+  for(idx in packageCollection.models){
+    var package = packageCollection.models[idx];
+    var packageView = new PackageView(package);
+    $('.packages').append(packageView.render().el);
+  }
+}
+
+var packageCollection = new PackageCollection(); 
 
 $(function(){
-  SublimePackagesEvaluatorapp.initialize();
-  
+
+  $('.package-form').on('submit', function(e){
+    e.preventDefault();
+    packageCollection.models = {}
+    var newName = $('.package-form input[name="package_name"]').val();
+    $('.package-form input[name="package_name"]').val('');
+    packageCollection.fetch(newName);
+  })
+
+  // If you see the 'addFlare' shot in the sky!!!!
+  $(packageCollection).on('addFlare', function(){
+    clearAndDisplayPackageList();
+  });
+ 
 })
+
+

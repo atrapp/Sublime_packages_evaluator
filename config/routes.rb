@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get '/profile' => 'users#profile', as: 'profile'
 
 
+
+  get '/search' => 'packages#search'
+
   resources :packages, except: [:new, :edit]
   resources :reviews, except: [:new, :edit]
 
@@ -28,6 +31,8 @@ end
 #       signup GET    /signup(.:format)            users#new
 #        users POST   /users(.:format)             users#create
 #      profile GET    /profile(.:format)           users#profile
+
+#       search GET    /search(.:format)            packages#search
 
 #     packages GET    /packages(.:format)          packages#index
 #              POST   /packages(.:format)          packages#create

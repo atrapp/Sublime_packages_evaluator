@@ -54,4 +54,6 @@ gem "twitter-bootstrap-rails"
 
 gem 'backbone-on-rails'
 
+gem 'httparty'
+
 
