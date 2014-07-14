@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   get '/search' => 'packages#search'
 
   resources :reviews, except: [:new, :edit]
-  get '/package_reviews'=> 'reviews#filter_by_package'
+
+  get '/package_reviews'=> 'reviews#filter_by_package' #TODO GET RID OF ME
 
     
 end

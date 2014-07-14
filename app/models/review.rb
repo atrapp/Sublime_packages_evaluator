@@ -7,4 +7,15 @@ class Review < ActiveRecord::Base
   
   belongs_to  :user
   belongs_to  :package
+
+  def to_display
+    {
+      title: self.title,
+      username: user.username,
+      description: self.description,
+      platform: self.platform,
+      rating: self.rating,
+      datetime: self.datetime
+    }
+  end
 end

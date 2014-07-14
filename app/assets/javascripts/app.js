@@ -48,6 +48,10 @@ SublimePackagesEvaluator.initialize = function(){
   $('form.review-form').on('submit', function(e){
     e.preventDefault();
 
+    var packageNameField = $("form.review-form input[name='review-package'")
+    var newPackageName = packageNameField.val();
+    packageNameField.val('');
+
     var titleField = $("form.review-form input[name='review-title'")
     var newTitle = titleField.val();
     titleField.val('');
@@ -94,6 +98,10 @@ SublimePackagesEvaluator.initialize = function(){
 
     var dateNow = new Date();  
     var newDateTime = dateNow.toLocaleDateString();
+    console.log(dateNow);
+
+    var userId = $("form.review-form input[name='author_id']").val();
+
     // var dmy = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     // var dmy = dateNow.toLocaleDateString();
     // var hh = dateNow.getHours(); 
@@ -103,7 +111,7 @@ SublimePackagesEvaluator.initialize = function(){
     // reviewCollection.add({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
     // ***   add --> create for connecting Backbone with Rails   ***
 
-    reviewCollection.create({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
+    reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
 });
 
@@ -134,6 +142,7 @@ function PackageView(model){
 
 
 PackageView.prototype.render = function(){
+  var that = this;
   var newPackage = $('<li>');
   newPackage.html("<a href=\"https://sublime.wbond.net/packages/" + this.model.name + "\" target=\"_blank\">" + this.model.name + "</a>" + '</br>' + 
                   this.model.description + '</br>' +
@@ -149,6 +158,7 @@ PackageView.prototype.render = function(){
   $.each(this.model.reviews, function(idx, ele){
     var reviewsItem = $('<li>');
     reviewsItem.html(ele.title + '<br />' +
+                     ele.username + '<br />' +
                      ele.description + '<br />' +
                      ele.platform + '<br />' +
                      ele.rating + '<br />' +
@@ -167,18 +177,14 @@ PackageView.prototype.render = function(){
   newPackage.append(showHideReviewsButton);
   
 
-  // *****   edit reviews   ******
+  // *****   write review   ******
 
-  var reviewForm = $('.review-form');
-  reviewForm.hide();
-  
-  var modelName = this.model.name;
-  
   var writeReviewButton = $('<button>Write a Review</button>');
 
   writeReviewButton.on('click', function(){    
-    reviewForm[package_name] = modelName;    
-    console.log("this reviewForm[package_name]:" + reviewForm[package_name]);    
+    // reviewForm[package_name] = that.model.name; 
+    // console.log("this reviewForm[package_name]:" + reviewForm[package_name]);
+    $("form.review-form input[name='review-package'").val(that.model.name);   
     reviewForm.toggle();
   });
 
@@ -236,6 +242,7 @@ function clearAndDisplayPackageList(){
 }
 
 var packageCollection = new PackageCollection(); 
+ 
 
 //**************************************************
 
@@ -243,6 +250,12 @@ var packageCollection = new PackageCollection();
 
 $(function(){
   SublimePackagesEvaluator.initialize();
+
+  reviewForm = $('.review-form');
+  reviewForm.hide();
+
+  var reviewsList = $('.reviews');
+  // reviewsList.hide();
 
   $('.package-form').on('submit', function(e){
     e.preventDefault();

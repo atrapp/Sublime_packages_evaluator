@@ -53,13 +53,20 @@
     <!-- </ul> -->
 
     <hr>
+
+    <div id="reviews">
+
     <h2>Reviews</h2>
     
+    <% if current_user %>
     <!-- new data -->
     <form class="review-form">
 
-      <label for="package_name">Package</label></br>     
-      <input type="text" id="package_name" name="review-package" placeholder="What package..."></br>
+      <input type="hidden" name="author_id" value="<%= current_user.id %>" >
+      <input type="hidden" name="author_name" value="<%= current_user.username %>" >
+        
+      <label for="package_name">Package</label></br>    
+      <input type="text" id="package_name" name="review-package" readonly></br>
 
       <label for="title">Title</label></br>     
       <input type="text" id="title" name="review-title" placeholder="Title of your review..."></br>
@@ -89,9 +96,10 @@
 
       <input type="submit">     
     </form>
-
+    <% end %>
     <ul class="reviews">
     </ul>
+</div>
 
 
 

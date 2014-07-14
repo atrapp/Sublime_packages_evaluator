@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
 
+  before_filter :require_login, only: [ :create, :update, :destroy ]
+
   def index
     reviews = Review.all
     render json: reviews.to_json
@@ -27,18 +29,19 @@ class ReviewsController < ApplicationController
     render json: review.to_json
   end
 
+  #TODO get rid of me
   def filter_by_package   
-    package = Review.where(package_name: params[:package_name] )   
+    reviews = Review.where(package_name: params[:package_name] )
     
-    unless package == nil
-      render json: package.to_json     
+    unless reviews == nil
+      render json: reviews.map(&:to_display).to_json
     end
   end
 
   private
 
   def review_params
-    params.require(:review).permit(:package_name, :title, :description, :platform, :rating, :datetime)
+    params.require(:review).permit(:package_name, :title, :description, :platform, :rating, :datetime, :user_id)
   end
 
 end
