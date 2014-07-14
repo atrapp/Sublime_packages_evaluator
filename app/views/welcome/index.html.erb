@@ -1,6 +1,7 @@
+
 <h1>Sublime Packages Evaluator</h1>
 
-<h2>
+<!-- <h2>
     Welcome <%= current_user ? 'User!' : '(unkown user)' %>
 </h2>
 
@@ -12,14 +13,85 @@
     </form>
 
     <ul class="users">
-    </ul>
+    </ul> -->
 
 
-    <h2>Packages</h2>
 
-    <form class="package-form"> 
-      <input type="text" name="package-name" placeholder="Package name...">       
+
+   <hr>
+   <h2>Search for Sublime Packages</h2>
+
+<div class="left">
+    
+    <form class="package-form">   
+      <label for="name">Package Name</label></br>     
+      <input type="text"  id="name" name="package_name">      
+      <input type="submit">      
     </form>
 
     <ul class="packages">
     </ul>
+
+<!--     <table class="packages">
+    </table> -->
+</div>
+
+<div class="right">  
+  <div class="d3chart">
+    <p>here comes some D3 animation!!!</p>
+  </div>
+</div>
+
+    <!-- new data -->
+    <!-- <form class="package-form"> -->
+      <!-- <label for="name">Package Name</label></br>      -->
+      <!-- <input type="text"  id="name" name="package-name">       -->
+      <!-- <input type="submit">       -->
+    <!-- </form> -->
+
+    <!-- <ul class="packages"> -->
+    <!-- </ul> -->
+
+    <hr>
+    <h2>Reviews</h2>
+    
+    <!-- new data -->
+    <form class="review-form">
+
+      <label for="package_name">Package</label></br>     
+      <input type="text" id="package_name" name="review-package" placeholder="What package..."></br>
+
+      <label for="title">Title</label></br>     
+      <input type="text" id="title" name="review-title" placeholder="Title of your review..."></br>
+
+      <label for="description">Description</label></br>
+      <textarea id="description" name="review-description" rows="5" cols="30"></textarea></br>
+
+      <label for="review-platform">Platform</label></br>
+      <label for="win">WIN</label>
+      <input type="radio" id="win" name="review-platform" value="win">
+      <label for="osx">OS X</label>
+      <input type="radio" id="osx" name="review-platform" value="osx">
+      <label for="linux">LINUX</label>
+      <input type="radio" id="linux" name="review-platform" value="linux"><br>
+
+      <label for="review-rating">Rating</label></br>
+      <label for="poor">1: poor</label>
+      <input type="radio" id="poor" name="review-rating" value="1">
+      <label for="fair">2: fair</label>
+      <input type="radio" id="fair" name="review-rating" value="2">
+      <label for="good">3: good</label>
+      <input type="radio" id="good" name="review-rating" value="3">
+      <label for="very_good">4: very good</label>
+      <input type="radio" id="very_good" name="review-rating" value="4">
+      <label for="excellent">5: excellent</label>
+      <input type="radio" id="excellent" name="review-rating" value="5"></br>
+
+      <input type="submit">     
+    </form>
+
+    <ul class="reviews">
+    </ul>
+
+
+

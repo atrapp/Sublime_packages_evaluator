@@ -4,5 +4,12 @@ var SublimePackagesEvaluatorapp = SublimePackagesEvaluatorapp || { Models: {}, C
 
 SublimePackagesEvaluatorapp.Collections.PackageCollection = Backbone.Collection.extend({
   model: SublimePackagesEvaluatorapp.Models.Package,
-  url: '/packages'   // ***   add url for connecting Backbone with Rails   ***
+ // url: '/packages'   // ***   add url for connecting Backbone with Rails   ***
+  //url: '/search?package_name='+packageName
 });
+
+
+// var collection = new SublimePackagesEvaluatorapp.Collections.PackageCollection()
+// collection.url = '/search?package_name='+packageName
+
+// collection.fetch()

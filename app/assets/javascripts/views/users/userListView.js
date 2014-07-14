@@ -1,6 +1,6 @@
-SublimePackagesEvaluator.Views.UsersIndex = Backbone.View.extend({
+SublimePackagesEvaluator.Views.UserListView = Backbone.View.extend({
 
-  template: JST['users/index']
+  template: JST['users/index'],
 
   initialize: function(){
     this.listenTo(this.collection, 'all', this.render);   

@@ -2,45 +2,38 @@
 <html>
 <head>
   <title>Sublime Packages Evaluator</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
-
-    <!-- Templates -->
-    <!-- in HTML5 you can use the tag <TEMPLATE> -->
-
-    <script type="text/template" id="user-template">
-      <ul class="user">
-        <%- email %> likes to review Sublime packages.  
-        <!-- <button data-action='release'>Delete</button> -->
-        <button data-action='edit'>Edit</button>
-      </ul>
-    </script>
-
-    <script type="text/template" id="edit-user-template">      
-      <form class="edit-user-form"> 
-        <input type="text" placeholder='<%- email %>'>       
-      </form>
-    </script>
-
-
-     <script type="text/template" id="package-template">
-      <ul class="package">
-        <%- name %> is the name of the Sublime package.  
-        <!-- <button data-action='release'>Delete</button> -->
-        <button data-action='edit'>Edit</button>
-      </ul>
-    </script>
-
-    <script type="text/template" id="edit-package-template">      
-      <form class="edit-package-form"> 
-        <input type="text" placeholder='<%- name %>'>       
-      </form>
-    </script>
-   
-
+  
 </head>
 <body>
+
+<div id="wrapper">
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <!--   <a class="navbar-brand" href="#">Project name</a> -->
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">          
+            <li class="home-menu"><a href="#">Home</a></li>           
+            <li class="search-menu"><a href="#">Search</a></li>            
+            <li class="reviews-menu"><a href="#">Reviews</a></li>            
+            <li class="contact-menu"><a href="#">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+  </div>
+
+  <div class="login">
 
     <% if current_user %>
         <p>Logged in as <%= current_user.email %></p>
@@ -49,8 +42,12 @@
         <%= link_to 'SignUp', signup_path %>
         <%= link_to 'LogIn', login_path %>
     <% end %>
-    
+
+  </div> 
+
 <%= yield %>
+
+</div>
 
 </body>
 </html>

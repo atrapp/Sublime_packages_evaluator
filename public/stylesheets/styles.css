@@ -1,0 +1,33 @@
+body {
+  background: url("/images/halftone.png");
+  /*background-size: cover;*/
+  font-family: 'Open Sans',Helvetica,Arial,Verdana,sans-serif;
+}
+
+#wrapper {
+  padding: 20px;
+}
+
+/*.navbar {
+  background-color: white;
+  color: black;
+}*/
+
+h1 {
+  margin: 50px auto;
+  color: #6f92ba; 
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul li{
+  padding: 10px;
+}
+
+.d3chart {
+  width: 400px;
+  height: 200px;
+  border: 1px solid black;
+}

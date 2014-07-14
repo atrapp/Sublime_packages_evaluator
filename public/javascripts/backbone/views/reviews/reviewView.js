@@ -37,6 +37,9 @@ SublimePackagesEvaluatorapp.Views.ReviewView = Backbone.View.extend({
     this.$el.find('form.edit-review-form').on('submit', function(e){
       e.preventDefault();
 
+      var packageField = that.$el.find("#package_name");
+      var newPackage = packageField.val();
+
       var titleField = that.$el.find("#title");
       var newTitle = titleField.val();
        
@@ -80,7 +83,7 @@ SublimePackagesEvaluatorapp.Views.ReviewView = Backbone.View.extend({
       var dateNow = new Date();  
       var newDateTime = dateNow.toLocaleDateString();
       
-      that.model.set({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
+      that.model.set({package_name: newPackage, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
 
       that.model.save(); // ***   add save() for connecting Backbone with Rails   ***
     })   

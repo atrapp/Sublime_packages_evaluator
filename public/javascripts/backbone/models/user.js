@@ -3,11 +3,7 @@ var SublimePackagesEvaluatorapp = SublimePackagesEvaluatorapp || { Models: {}, C
 
 
 SublimePackagesEvaluatorapp.Models.User = Backbone.Model.extend({
-  defaults:{
-    
-    email: 'user1@test.com',
-    password: 'pw',
-    username: 'user1'   
+  defaults:{   
  
   }
 });

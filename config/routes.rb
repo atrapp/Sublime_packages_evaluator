@@ -12,12 +12,13 @@ Rails.application.routes.draw do
   get '/profile' => 'users#profile', as: 'profile'
 
 
-
+  resources :packages, except: [:new, :edit]
   get '/search' => 'packages#search'
 
-  resources :packages, except: [:new, :edit]
   resources :reviews, except: [:new, :edit]
+  get '/package_reviews'=> 'reviews#filter_by_package'
 
+    
 end
 
 

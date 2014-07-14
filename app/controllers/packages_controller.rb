@@ -30,10 +30,21 @@ require 'sublime'
   end
 
   def search
-    package = Sublime.find_package( params[:package_name] )   
+    packages = Sublime.find_package( params[:package_name] )   
     
-    unless package == nil
-      render json: package.to_json     
+# ****
+    packages_and_reviews = packages.map do |package|
+      # if reviews = Review.find_by( {package_name: package['name']} )
+      if reviews = Review.where( package_name: package['name'] )
+        
+        package['reviews'] = reviews
+      end
+      package
+    end
+# ****
+
+    unless packages_and_reviews == nil
+      render json: packages_and_reviews.to_json     
     end
   end
 

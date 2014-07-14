@@ -1,6 +1,8 @@
-SublimePackagesEvaluator.Views.PackagesIndex = Backbone.View.extend({
+// determines the definite load order of files
+var SublimePackagesEvaluatorapp = SublimePackagesEvaluatorapp || { Models: {}, Collections: {}, Views: {} };
 
-  template: JST['packages/index']
+
+SublimePackagesEvaluatorapp.Views.PackageListView = Backbone.View.extend({
  
   initialize: function(){
     this.listenTo(this.collection, 'all', this.render);   
@@ -14,13 +16,11 @@ SublimePackagesEvaluator.Views.PackagesIndex = Backbone.View.extend({
 
     _.each(this.collection.models, function(package){
       // debugger;
-      var packageView = new SublimePackagesEvaluator.Views.PackageView({model: package});
+      var packageView = new SublimePackagesEvaluatorapp.Views.PackageView({model: package});
       that.$el.append(packageView.render().el);
     });
 
     return this;
   }
-
-});
 
 });

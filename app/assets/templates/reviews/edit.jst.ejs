@@ -1,0 +1,31 @@
+   
+      <form class="edit-review-form">
+        Package: <input type="text" id="package_name" value='<%- package_name %>'></br>
+
+        Title: <input type="text" id="title" value='<%- title %>'></br>
+
+        Description:</br>
+        <textarea id="description" rows="5" cols="30"><%- description %></textarea></br>
+        
+        <label for="review-platform">Platform: <%-  platform %></label></br>
+        <label for="win">WIN</label>
+        <input type="radio" id="win" name="review-platform" value="win">    
+        <label for="osx">OS X</label>
+        <input type="radio" id="osx" name="review-platform" value="osx">        
+        <label for="linux">LINUX</label>
+        <input type="radio" id="linux" name="review-platform" value="linux"><br>        
+
+        <label for="review-rating">Rating: <%- rating %></label></br>
+        <label for="poor">1: poor</label>
+        <input type="radio" id="poor" name="review-rating" value="1">
+        <label for="fair">2: fair</label>
+        <input type="radio" id="fair" name="review-rating" value="2">
+        <label for="good">3: good</label>
+        <input type="radio" id="good" name="review-rating" value="3">
+        <label for="very_good">4: very good</label>
+        <input type="radio" id="very_good" name="review-rating" value="4">
+        <label for="excellent">5: excellent</label>
+        <input type="radio" id="excellent" name="review-rating" value="5"></br>
+
+        <button>Update</button>         
+      </form>
