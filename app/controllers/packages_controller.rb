@@ -1,6 +1,6 @@
 class PackagesController < ApplicationController
 
-require 'sublime'
+require 'sublime_package_API'
 
   def index
     packages = Package.all
@@ -30,7 +30,7 @@ require 'sublime'
   end
 
   def search
-    packages = Sublime.find_package( params[:package_name] )   
+    packages = SublimePackageAPI.find_package( params[:package_name] )   
     
 # ****
     packages_and_reviews = packages.map do |package|

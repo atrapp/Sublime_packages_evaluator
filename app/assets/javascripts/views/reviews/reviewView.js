@@ -83,7 +83,7 @@ SublimePackagesEvaluator.Views.ReviewView = Backbone.View.extend({
       
       that.model.set({package_name: newPackage, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
 
-      that.model.save(); // ***   add save() for connecting Backbone with Rails   ***
+      that.model.save(); 
     })   
     return this;
   },

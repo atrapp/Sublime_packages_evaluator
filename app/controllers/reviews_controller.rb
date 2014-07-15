@@ -29,15 +29,6 @@ class ReviewsController < ApplicationController
     render json: review.to_json
   end
 
-  #TODO get rid of me
-  def filter_by_package   
-    reviews = Review.where(package_name: params[:package_name] )
-    
-    unless reviews == nil
-      render json: reviews.map(&:to_display).to_json
-    end
-  end
-
   private
 
   def review_params

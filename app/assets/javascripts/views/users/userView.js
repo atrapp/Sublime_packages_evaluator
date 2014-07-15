@@ -7,13 +7,16 @@ SublimePackagesEvaluator.Views.UserView = Backbone.View.extend({
   },
 
   tagName: 'li',
+  
+  template: JST['users/user'],
 
-  template: _.template($('#user-template').html()),
-  editTemplate: _.template($('#edit-user-template').html()),
+  editTemplate: JST['users/edit'],
+
   render: function(){
     this.$el.empty();
     var renderedHTML = this.template(this.model.attributes);
     this.$el.html(renderedHTML);
+
     return this;
   },
 

@@ -1,32 +1,13 @@
 
-<h1>Sublime Packages Evaluator</h1>
 
-<!-- <h2>
-    Welcome <%= current_user ? 'User!' : '(unkown user)' %>
-</h2>
-
-
-    <h2>Users</h2>
-
-    <form class="user-form"> 
-      <input type="text" name="user-email" placeholder="Email address...">       
-    </form>
-
-    <ul class="users">
-    </ul> -->
-
-
-
-
-   <hr>
-   <h2>Search for Sublime Packages</h2>
+<h2>Search for Sublime Packages</h2>
 
 <div class="left">
     
     <form class="package-form">   
       <label for="name">Package Name</label></br>     
       <input type="text"  id="name" name="package_name">      
-      <input type="submit">      
+      <button><span class="glyphicon glyphicon-search"></span></button>
     </form>
 
     <ul class="packages">
@@ -36,11 +17,8 @@
     </table> -->
 </div>
 
-<div class="right">  
-  <div class="d3chart">
-    <p>here comes some D3 animation!!!</p>
-  </div>
-</div>
+<!-- <div class="right d3chart">    
+</div> -->
 
     <!-- new data -->
     <!-- <form class="package-form"> -->
@@ -57,7 +35,15 @@
     <div id="reviews">
 
     <h2>Reviews</h2>
-    
+    <script type="text/javascript">
+        window.currentUser = null;
+        <% if current_user %>
+            window.currentUser = {
+                id : "<%= current_user.id %>"
+            }
+        <% end %>
+    </script>
+
     <% if current_user %>
     <!-- new data -->
     <form class="review-form">
@@ -97,8 +83,8 @@
       <input type="submit">     
     </form>
     <% end %>
-    <ul class="reviews">
-    </ul>
+<!--     <ul class="reviews">
+    </ul> -->
 </div>
 
 

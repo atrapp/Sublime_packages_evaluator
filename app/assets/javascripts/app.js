@@ -5,45 +5,41 @@ window.SublimePackagesEvaluator = {
   Routers: {},
 };
 
-
-
 SublimePackagesEvaluator.initialize = function(){
   console.log("initalized");
-//************************
-// ******   USER    ******
-//************************
+
+  //************************
+  // ******   USER    ******
+  //************************
   var userCollection = new SublimePackagesEvaluator.Collections.Users();
 
   var userListView = new SublimePackagesEvaluator.Views.UserListView({
     collection: userCollection,
-    el: $('.users')  // ==> this connects the collection to the ul in index.html AND puts it on the page !!!! go to 2
+    el: $('.users') 
   });
 
-  userCollection.fetch(); // ***   add userCollection.fetch() for connecting Backbone with Rails   ***
+  userCollection.fetch(); 
 
   $('form.user-form').on('submit', function(e){
     e.preventDefault();
     var emailField = $("form.user-form input[name='user-email'")
     var newEmail = emailField.val();
     emailField.val('');
-    // userCollection.add({email: newEmail}); 
-    userCollection.create({email: newEmail});    // ***   add --> create for connecting Backbone with Rails   ***
+  
+    userCollection.create({email: newEmail});   
   });
 
-
-
-//***************************
-// ******   REVIEWS    ******
-//***************************
+  //***************************
+  // ******   REVIEWS    ******
+  //***************************
   var reviewCollection = new SublimePackagesEvaluator.Collections.Reviews();
 
   var reviewListView = new SublimePackagesEvaluator.Views.ReviewListView({
     collection: reviewCollection,
-    el: $('.reviews')  // ==> this connects the collection to the ul in index.html AND puts it on the page !!!! go to 2
+    el: $('.reviews') 
   });
 
-  reviewCollection.fetch(); // ***   add reviewCollection.fetch() for connecting Backbone with Rails   ***
-
+  reviewCollection.fetch(); 
 
   $('form.review-form').on('submit', function(e){
     e.preventDefault();
@@ -97,24 +93,13 @@ SublimePackagesEvaluator.initialize = function(){
     ratingField.prop('checked', false);
 
     var dateNow = new Date();  
-    var newDateTime = dateNow.toLocaleDateString();
-    console.log(dateNow);
-
+    var newDateTime = dateNow.toString();
+    
     var userId = $("form.review-form input[name='author_id']").val();
-
-    // var dmy = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    // var dmy = dateNow.toLocaleDateString();
-    // var hh = dateNow.getHours(); 
-    // var mm = dateNow.getMinutes();
-    // var newDateTime = dmy + ', ' + hh + ':' + mm;
-
-    // reviewCollection.add({title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime});
-    // ***   add --> create for connecting Backbone with Rails   ***
 
     reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
-});
-
+  });
 
 };
 //***************************
@@ -133,13 +118,12 @@ function Package(packageJSON){
   this.reviews = packageJSON.reviews;
   this.rating = "3";  
 }
-// ************ View *************
 
+// ************ View *************
 function PackageView(model){
   this.model = model;
   this.el = undefined;
 }
-
 
 PackageView.prototype.render = function(){
   var that = this;
@@ -154,7 +138,7 @@ PackageView.prototype.render = function(){
                   );  
 
   // *****   show/hide reviews   ******
-  var reviewsList = $('<ul>');
+  var reviewsList = $('<ul>').addClass('reviews');
   $.each(this.model.reviews, function(idx, ele){
     var reviewsItem = $('<li>');
     reviewsItem.html(ele.title + '<br />' +
@@ -179,26 +163,25 @@ PackageView.prototype.render = function(){
 
   // *****   write review   ******
 
-  var writeReviewButton = $('<button>Write a Review</button>');
+ 
+  if (window.currentUser){
+    var writeReviewButton = $('<button>Write a Review</button>');
 
-  writeReviewButton.on('click', function(){    
-    // reviewForm[package_name] = that.model.name; 
-    // console.log("this reviewForm[package_name]:" + reviewForm[package_name]);
-    $("form.review-form input[name='review-package'").val(that.model.name);   
-    reviewForm.toggle();
-  });
+    writeReviewButton.on('click', function(){   
+      $("form.review-form input[name='review-package'").val(that.model.name);   
+      reviewForm.toggle();
+       $(this).parent().children('ul').prepend(reviewForm);
+    });
+  }
 
   newPackage.append(writeReviewButton);
   
-
   // *****   return this package   *****
   newPackage.append(reviewsList);
 
   this.el = newPackage;
   return this;
 }
-
-
 
 // ************ Collection *************
 function PackageCollection(){
@@ -215,7 +198,6 @@ PackageCollection.prototype.add = function(packageJSON){
   return this;
 }
 
-
 // ************ Get Packages from Sublime *************
 PackageCollection.prototype.fetch = function(packageName){
   var that = this;
@@ -229,7 +211,6 @@ PackageCollection.prototype.fetch = function(packageName){
       }
     }
   })
-
 };
 
 function clearAndDisplayPackageList(){
@@ -245,7 +226,6 @@ var packageCollection = new PackageCollection();
  
 
 //**************************************************
-
 
 
 $(function(){
@@ -264,13 +244,10 @@ $(function(){
     $('.package-form input[name="package_name"]').val('');
     packageCollection.fetch(newName);
   })
-
-  // If you see the 'addFlare' shot in the sky!!!!
+  
   $(packageCollection).on('addFlare', function(){
     clearAndDisplayPackageList();
-  });
-
+  })
   
-
 })
 

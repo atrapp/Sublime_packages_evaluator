@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy', as: 'logout'
 
   get '/signup' => 'users#new', as: 'signup'
-  post '/users' => 'users#create', as: 'users'  # as: users, 1. because its nicer to read, 2. the form "new" will need it to post the data
-
+  post '/users' => 'users#create', as: 'users'  
+  
   get '/profile' => 'users#profile', as: 'profile'
 
 
@@ -16,9 +16,6 @@ Rails.application.routes.draw do
   get '/search' => 'packages#search'
 
   resources :reviews, except: [:new, :edit]
-
-  get '/package_reviews'=> 'reviews#filter_by_package' #TODO GET RID OF ME
-
     
 end
 
