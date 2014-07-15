@@ -1,8 +1,7 @@
 
+<div class="main">
 
-<h2>Search for Sublime Packages</h2>
-
-<div class="left">
+    <h2>Search for Sublime Packages</h2>
     
     <form class="package-form">   
       <label for="name">Package Name</label></br>     
@@ -13,45 +12,36 @@
     <ul class="packages">
     </ul>
 
-<!--     <table class="packages">
-    </table> -->
+<!-- 
+    <table class="packages">
+    </table>
+ -->
 </div>
 
-<!-- <div class="right d3chart">    
-</div> -->
+<!-- 
+<div class="aside d3chart">    
+</div>
+ -->
 
-    <!-- new data -->
-    <!-- <form class="package-form"> -->
-      <!-- <label for="name">Package Name</label></br>      -->
-      <!-- <input type="text"  id="name" name="package-name">       -->
-      <!-- <input type="submit">       -->
-    <!-- </form> -->
-
-    <!-- <ul class="packages"> -->
-    <!-- </ul> -->
-
-    <hr>
-
-    <div id="reviews">
-
-    <h2>Reviews</h2>
-    <script type="text/javascript">
-        window.currentUser = null;
-        <% if current_user %>
-            window.currentUser = {
-                id : "<%= current_user.id %>"
-            }
-        <% end %>
-    </script>
-
+   
+<script type="text/javascript">
+    window.currentUser = null;
     <% if current_user %>
+        window.currentUser = {
+            id : "<%= current_user.id %>"
+        }
+     <% end %>
+</script>
+
+
+<% if current_user %>
     <!-- new data -->
     <form class="review-form">
 
       <input type="hidden" name="author_id" value="<%= current_user.id %>" >
       <input type="hidden" name="author_name" value="<%= current_user.username %>" >
         
-      <label for="package_name">Package</label></br>    
+      <label for="package_name">Package</label></br>     
       <input type="text" id="package_name" name="review-package" readonly></br>
 
       <label for="title">Title</label></br>     
@@ -80,12 +70,8 @@
       <label for="excellent">5: excellent</label>
       <input type="radio" id="excellent" name="review-rating" value="5"></br>
 
-      <input type="submit">     
+      <button type='submit'>Submit</button>
+              
     </form>
-    <% end %>
-<!--     <ul class="reviews">
-    </ul> -->
-</div>
-
-
+<% end %>
 

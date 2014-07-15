@@ -10,6 +10,7 @@ class Review < ActiveRecord::Base
   def to_display
     {
       title: self.title,
+      user_id: self.user_id,
       username: user.username,
       description: self.description,
       platform: self.platform,

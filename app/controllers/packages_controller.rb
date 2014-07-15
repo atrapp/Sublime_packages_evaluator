@@ -32,7 +32,6 @@ require 'sublime_package_API'
   def search
     packages = SublimePackageAPI.find_package( params[:package_name] )   
     
-# ****
     packages_and_reviews = packages.map do |package|
       # if reviews = Review.find_by( {package_name: package['name']} )
       if reviews = Review.where( package_name: package['name'] ).map(&:to_display)
@@ -41,13 +40,11 @@ require 'sublime_package_API'
       end
       package
     end
-# ****
 
     unless packages_and_reviews == nil
       render json: packages_and_reviews.to_json
     end
   end
-
 
   private
 

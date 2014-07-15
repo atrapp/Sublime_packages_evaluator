@@ -99,9 +99,14 @@ SublimePackagesEvaluator.initialize = function(){
 
     reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
+    $('form.review-form').hide()
+
+    packageCollection.fetch(newPackageName);
+
   });
 
 };
+
 //***************************
 // ******   SUBLIME    ******
 //***************************
@@ -140,41 +145,49 @@ PackageView.prototype.render = function(){
   // *****   show/hide reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
   $.each(this.model.reviews, function(idx, ele){
+
+    var deleteButton = '';
+    if (window.currentUser && window.currentUser.id == ele.user_id) { 
+      deleteButton = "<p>delete</p>";
+    }
+
     var reviewsItem = $('<li>');
     reviewsItem.html(ele.title + '<br />' +
                      ele.username + '<br />' +
                      ele.description + '<br />' +
                      ele.platform + '<br />' +
                      ele.rating + '<br />' +
-                     ele.datetime + '<br />' 
-                    );    
+                     ele.datetime + '<br />' +
+                     deleteButton
+                    );       
+
     reviewsList.append(reviewsItem);
   });
 
   reviewsList.hide();
-
+  
   var showHideReviewsButton = $('<button>Show/Hide Reviews</button>');
   showHideReviewsButton.on('click', function(){
+    reviewForm.hide('slow');
     reviewsList.toggle();
   });  
 
-  newPackage.append(showHideReviewsButton);
-  
+  newPackage.append(showHideReviewsButton);  
 
-  // *****   write review   ******
-
- 
+  // *****   write review   ****** 
   if (window.currentUser){
     var writeReviewButton = $('<button>Write a Review</button>');
 
-    writeReviewButton.on('click', function(){   
-      $("form.review-form input[name='review-package'").val(that.model.name);   
-      reviewForm.toggle();
-       $(this).parent().children('ul').prepend(reviewForm);
+    writeReviewButton.on('click', function(){  
+      reviewForm.show(100, function(){
+        $("form.review-form input[name='review-package'").val(that.model.name);
+      });
+      reviewsList.hide('slow');
+      $(this).parent().append(reviewForm);
     });
-  }
 
-  newPackage.append(writeReviewButton);
+    newPackage.append(writeReviewButton);
+  }  
   
   // *****   return this package   *****
   newPackage.append(reviewsList);
@@ -194,7 +207,7 @@ PackageCollection.prototype.add = function(packageJSON){
   var newPackage = new Package(packageJSON);
   this.models[packageJSON.name] = newPackage;
 
-  $(this).trigger('addFlare');     // shoot up in the air that add flare
+  $(this).trigger('addFlare');
   return this;
 }
 
@@ -231,7 +244,7 @@ var packageCollection = new PackageCollection();
 $(function(){
   SublimePackagesEvaluator.initialize();
 
-  reviewForm = $('.review-form');
+  reviewForm = $('form.review-form');
   reviewForm.hide();
 
   var reviewsList = $('.reviews');

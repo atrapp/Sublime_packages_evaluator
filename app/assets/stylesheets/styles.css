@@ -1,6 +1,5 @@
 body {
-  background: url("halftone.png");
-  /*background-size: cover;*/
+  background: url("halftone.png");  
   font-family: 'Open Sans',Helvetica,Arial,Verdana,sans-serif;
 }
 
@@ -12,8 +11,7 @@ body {
   height: 12%;
 }
 
-.navbar-inverse {
-  /*float: left;*/
+.navbar-inverse { 
   color: #6f92ba; !important;
   font-size: 16px;
 }
@@ -28,11 +26,7 @@ body {
 
 .page-header{
   height: 200px;
-  padding: 20px;
-  padding-top: 50px;
-  padding-bottom: 20px;
-
-
+  padding: 50px 20px 20px 20px;
   background: #1e5799; /* Old browsers */
   background: -moz-linear-gradient(left,  #1e5799 0%, #6f92ba 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, right top, color-stop(0%,#1e5799), color-stop(100%,#6f92ba)); /* Chrome,Safari4+ */
@@ -41,16 +35,20 @@ body {
   background: -ms-linear-gradient(left,  #1e5799 0%,#6f92ba 100%); /* IE10+ */
   background: linear-gradient(to right,  #1e5799 0%,#6f92ba 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#6f92ba',GradientType=1 ); /* IE6-9 */
-
 }
 
 h1 {  
   /*color: #6f92ba; */
-  color:white;
+  color: white;
   font-size: 60px;
 }
+
 small {
   color: #101010 !important;
+}
+
+.main {
+  padding-left: 20px;
 }
 
 ul {
@@ -78,7 +76,6 @@ ul li {
 }
 
 
-
 @media (max-width: 767px) {
 
   h1 {   
@@ -89,7 +86,6 @@ ul li {
     float: left;
   }
 }
-
 
 
 @media (max-width: 480px) {
