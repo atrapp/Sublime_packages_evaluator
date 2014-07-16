@@ -48,11 +48,14 @@ h1 {
 h2 {
   /*color: #6f92ba; */
   margin-left: 10px;
-  padding: 10px; 
+  padding-top: 20px; 
 }
 
 h3 {  
-  background: url("tweed.png");
+  font-family: 'Calligraffitti', cursive;  
+  font-size: 30px;
+  padding: 10px;
+  padding-top: 30px;    
 }
 
 small {
@@ -86,7 +89,7 @@ small {
 
 .packages-total {
   float: left; 
-  width: 300px;
+  width: 400px;
   height: 30px;
   margin-top: 20px;
   padding: 10px 20px 10px 20px;  
@@ -117,6 +120,43 @@ ul li {
 
 .review-form {
   background: url("notebook.png");
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+.review-form label {
+  margin: 10px;
+  font-size: 16px;
+}
+
+.review-form label[for=review-rating],
+.review-form label[for=review-platform] {
+  width: 80px;
+}
+
+.review-form input[type=text] {
+  padding: 5px;
+  margin: 10px;
+  width: 400px;
+  height: 40px;
+}
+
+.review-form textarea {
+  margin: 10px;
+  width: 600px;
+  height: 200px;
+}
+
+.review-form input[type=radio] {  
+  margin: 0;
+  font-size: 16px;
+}
+
+.review-form button {
+  margin: 10px;
+  margin-bottom: 30px;
+  padding: 10px; 
+  font-size: 16px;
 }
 
 .reviews {
@@ -135,8 +175,7 @@ ul li {
 table {
   /*width: 400px;*/
   margin-left: 20px;  
-  margin-bottom: 100px;  
-  border: 1px solid green;
+  margin-bottom: 100px; 
 }
 
 table tr {
@@ -160,23 +199,9 @@ table tr td.package-label {
   margin: 10px 10px 20px 0;
   font-size: 16px;
 }
-/*table.packages tr td:nth-child(odd) {
-  width: 150px;
-  font-size: 18px;
-  color: #101010; 
-  border: 1px solid blue;
-}
 
-table.packages tr td:nth-child(even) input {
-  width: 400px;
-  height: 40px;
-  margin: 5px 0;
-  font-size: 18px;
-  border: 1px solid red;
-}*/
-
-form.horizontal {
-   margin-left: 100px;  
+form .form-horizontal {
+  margin-left: 100px;   
 }
 
 .control-group {
@@ -255,8 +280,7 @@ div.form-end {
 
   .package-search-form {
     float: left;
-    padding: 20px;
-    border: 1px solid red;
+    padding: 20px;    
     width: 400px;
   }
 

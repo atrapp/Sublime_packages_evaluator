@@ -40,6 +40,8 @@ SublimePackagesEvaluator.initialize = function(){
 
   reviewCollection.fetch(); 
 
+
+  // *****   create a new review    ******
   $('form.review-form').on('submit', function(e){
     e.preventDefault();
 
@@ -100,10 +102,10 @@ SublimePackagesEvaluator.initialize = function(){
 
     $('form.review-form').hide()
 
-    packageCollection.fetch(newPackageName);  
-
+    packageCollection.fetch(newPackageName);
   });
 
+  // *****   delete a review    ******
 };
 
 //***************************
@@ -152,16 +154,18 @@ PackageView.prototype.render = function(){
   reviewsList.append(reviewsTotal);
   $.each(this.model.reviews, function(idx, ele){
 
-    var deleteButton = '';
+      deleteButton = '';
 
-    if (window.currentUser && window.currentUser.id == ele.user_id) { 
-      deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");     
-
+    // will be added later
+    // if (window.currentUser && window.currentUser.id == ele.user_id) { 
+    //   deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
     //   deleteButton.on('click', function(e){
     //     e.preventDefault();
     //     console.log("Delete this review: " + ele.title + "(" + ele.id + ")");
+    //     console.log("Index: " + idx + " in " + that.model.reviews);
+    //     that.model.reviews.splice(idx, 1);
     //   })  
-     }
+    //  }
 
     var reviewsItem = $('<li>');
     reviewsItem.html(ele.title + '<br />' +
@@ -191,6 +195,7 @@ PackageView.prototype.render = function(){
 
     writeReviewButton.on('click', function(){  
       reviewForm.show(100, function(){
+        $("form.review-form span[id='package_name'").html(that.model.name);  
         $("form.review-form input[name='review-package'").val(that.model.name);
       });
       reviewsList.hide('slow');
@@ -235,7 +240,7 @@ PackageCollection.prototype.fetch = function(packageName){
   })
 };
 
-function clearAndDisplayPackageList(){
+function clearAndDisplayPackageList(searchPackageName){
   var packagesTotal = 0;  
   $('.packages').html('');
   for(idx in packageCollection.models){
@@ -244,7 +249,7 @@ function clearAndDisplayPackageList(){
     var packageView = new PackageView(package);
     $('.packages').append(packageView.render().el);
   }
-  $('.packages-total').html('<p>'+packagesTotal+' results found</p>');
+  $('.packages-total').html('<p>'+packagesTotal+' results for "' + searchPackageName + '"</p>');
 }
 
 var packageCollection = new PackageCollection(); 
@@ -262,16 +267,17 @@ $(function(){
   var reviewsList = $('.reviews');
   // reviewsList.hide();
 
+  var searchPackageName;
   $('.package-search-form').on('submit', function(e){
     e.preventDefault();
     packageCollection.models = {}
-    var newName = $('.package-search-form input[name="package_name"]').val();
+    searchPackageName = $('.package-search-form input[name="package_name"]').val();
     $('.package-search-form input[name="package_name"]').val('');
-    packageCollection.fetch(newName);
+    packageCollection.fetch(searchPackageName);
   })
   
   $(packageCollection).on('addFlare', function(){
-    clearAndDisplayPackageList();
+    clearAndDisplayPackageList(searchPackageName);
   })
   
 })

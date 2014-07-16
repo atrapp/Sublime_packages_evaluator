@@ -11,13 +11,8 @@
     <div class="packages-total">
     </div>
 
-<!--     <ul class="packages">
-    </ul> -->
-
     <table class="packages">
     </table>
-
-
 
 <!--     <div class="d3chart">    
     </div>
@@ -31,8 +26,6 @@
           <li><a href="#">5</a></li>
           <li><a href="#">&raquo;</a></li>
         </ul> -->
-
-
 </div>
 
 
@@ -49,42 +42,43 @@
 
 <% if current_user %>
     <!-- new data -->
+
     <form class="review-form">
 
+      <h3>Write your review for <span id="package_name"></span></h3>
+
       <input type="hidden" name="author_id" value="<%= current_user.id %>" >
-      <input type="hidden" name="author_name" value="<%= current_user.username %>" >
-        
-      <label for="package_name">Package</label></br>     
-      <input type="text" id="package_name" name="review-package" readonly></br>
+      <input type="hidden" name="author_name" value="<%= current_user.username %>" >  
+      <input type="hidden" id="package_name" name="review-package" readonly>
 
-      <label for="title">Title</label></br>     
-      <input type="text" id="title" name="review-title" placeholder="Title of your review..."></br>
+      <input type="text" id="title" name="review-title" placeholder="Title..."></br>
+     
+      <textarea id="description" name="review-description" placeholder="Your description..."></textarea></br>
 
-      <label for="description">Description</label></br>
-      <textarea id="description" name="review-description" rows="5" cols="30"></textarea></br>
-
-      <label for="review-platform">Platform</label></br>
-      <label for="win">WIN</label>
+      <label for="review-platform">Platform:</label>
+     
       <input type="radio" id="win" name="review-platform" value="win">
-      <label for="osx">OS X</label>
+      <label for="win">WIN</label>      
       <input type="radio" id="osx" name="review-platform" value="osx">
-      <label for="linux">LINUX</label>
-      <input type="radio" id="linux" name="review-platform" value="linux"><br>
+      <label for="osx">OS X</label>      
+      <input type="radio" id="linux" name="review-platform" value="linux">
+      <label for="linux">LINUX</label><br>
 
-      <label for="review-rating">Rating</label></br>
-      <label for="poor">1: poor</label>
+      <label for="review-rating">Rating:</label>      
       <input type="radio" id="poor" name="review-rating" value="1">
-      <label for="fair">2: fair</label>
+      <label for="poor">1: poor</label>      
       <input type="radio" id="fair" name="review-rating" value="2">
-      <label for="good">3: good</label>
+      <label for="fair">2: fair</label>      
       <input type="radio" id="good" name="review-rating" value="3">
-      <label for="very_good">4: very good</label>
+      <label for="good">3: good</label>      
       <input type="radio" id="very_good" name="review-rating" value="4">
-      <label for="excellent">5: excellent</label>
-      <input type="radio" id="excellent" name="review-rating" value="5"></br>
+      <label for="very_good">4: very good</label>      
+      <input type="radio" id="excellent" name="review-rating" value="5">
+      <label for="excellent">5: excellent</label></br>
 
-      <button type='submit'>Submit</button>
+      <button type='submit'>Submit Review</button>
               
     </form>
+
 <% end %>
 
