@@ -49,10 +49,11 @@ gem 'rails_12factor', group: :production
 gem 'sorcery'
 gem 'omniauth-twitter'
 
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails" , '>= 2.1.6'
 
 gem 'backbone-on-rails'
 
 gem 'httparty'
+
 
 

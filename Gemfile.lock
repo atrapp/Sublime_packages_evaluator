@@ -213,5 +213,5 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   sorcery
   spring
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails (>= 2.1.6)
   uglifier (>= 1.3.0)
