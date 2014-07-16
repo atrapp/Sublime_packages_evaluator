@@ -1,6 +1,8 @@
 body {
   background: url("halftone.png");  
   font-family: 'Open Sans',Helvetica,Arial,Verdana,sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 #wrapper { 
@@ -8,16 +10,16 @@ body {
 }
 
 .navbar {
-  height: 12%;
+  height: 12%;  
 }
 
 .navbar-inverse { 
-  color: #6f92ba; !important;
+  color: white; !important;
   font-size: 16px;
 }
 
 .navbar-inverse a {
-  color: white;  
+  color: #6f92ba;  
 }
 
 .login {
@@ -25,7 +27,7 @@ body {
 }
 
 .page-header{
-  height: 200px;
+  height: 200px; 
   padding: 50px 20px 20px 20px;
   background: #1e5799; /* Old browsers */
   background: -moz-linear-gradient(left,  #1e5799 0%, #6f92ba 100%); /* FF3.6+ */
@@ -37,18 +39,68 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#6f92ba',GradientType=1 ); /* IE6-9 */
 }
 
-h1 {  
-  /*color: #6f92ba; */
+h1 { 
+  margin-left: 10px; 
   color: white;
   font-size: 60px;
+}
+
+h2 {
+  /*color: #6f92ba; */
+  margin-left: 10px;
+  padding: 10px; 
+}
+
+h3 {  
+  background: url("tweed.png");
 }
 
 small {
   color: #101010 !important;
 }
 
+.slogan {
+  float: right;
+  font-family: 'Calligraffitti', cursive;
+  font-size: 30px;
+  color: white;
+  padding-right: 20px;
+}
+
 .main {
   padding-left: 20px;
+}
+
+.package-search-form {
+  float: left;
+  padding: 20px;
+  border: 1px solid red;
+  width: 400px;
+}
+
+.package-search-form #name {
+  width: 300px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.packages-total {
+  float: left;
+  /*clear: left;*/
+  width: 400px;
+  height: 30px;
+  padding: 43px 20px 10px 20px;
+
+  border: 1px solid blue;
+  font-family: 'Calligraffitti', cursive;
+  font-size: 30px;
+  widht
+}
+
+.package-title { 
+  color: #6f92ba; 
+  font-size: 20px;
+  font-weight: bold;
 }
 
 ul {
@@ -57,6 +109,13 @@ ul {
 
 ul li {
   padding: 10px;
+}
+
+.packages {  
+  clear: left;
+  float: left;
+  margin-top: 20px;
+  /*background: rgba(0,0,0,0.1);*/
 }
 
 .review-form {
@@ -68,13 +127,89 @@ ul li {
 }
 
 .d3chart {
-  background: url("bubble.png");
-   background-size: cover;
+  float: right;
+  background: url("bubblechart.png");
+  background-size: cover;
   width: 400px;
   height: 400px;
   border: 1px solid white;
 }
 
+
+table {
+  margin-left: 100px;  
+}
+
+table tr { 
+  height: 40px;
+}
+
+table tr td:nth-child(odd) {
+  width: 150px;
+  font-size: 18px;
+  color: #101010; 
+}
+
+table tr td:nth-child(even) input {
+  width: 400px;
+  height: 40px;
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+form.horizontal {
+   margin-left: 100px;  
+}
+
+.control-group {
+  margin-left: 100px;
+}
+
+.control-label{
+  clear: left;
+  float: left;
+  width: 150px;  
+  margin-right: 30px;
+  font-size: 18px;
+  color: #101010; 
+}
+
+.controls {
+  float: left; 
+}
+
+.controls input {
+  width: 400px;
+  height: 40px;
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.control-group button {
+  clear: left;
+  margin-left: 180px;
+  margin-top: 10px;
+}
+
+div.form-end {
+  clear: left;
+  margin-left: 180px;
+  margin-top: 10px;
+}
+
+
+/**********************************************************/
+
+@media (max-width: 900px) {
+
+  .slogan {   
+    display: none;
+  }
+
+}
+
+
+/**********************************************************/
 
 @media (max-width: 767px) {
 
@@ -82,10 +217,40 @@ ul li {
     font-size: 45px;
   }
 
+  ul.nav.navbar-nav {
+    float: right;
+    background: rgba(0,0,0,0.8);
+    width: 200px;
+  }
+
+  ul.nav.navbar-nav li {
+    border-top: 2px solid #333;
+  }
+
   .login {  
     float: left;
   }
+
+  .package-form {
+    padding: 0;
+  }
+
+  .control-group {
+    margin-left: 20px;
+  }
+
+  .control-group button {  
+    margin-left: 0;
+  }
+
+  div.form-end {
+    margin-left: 0;
+  }
+
+
 }
+
+/**********************************************************/
 
 
 @media (max-width: 480px) {

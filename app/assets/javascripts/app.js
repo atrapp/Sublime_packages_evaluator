@@ -6,8 +6,7 @@ window.SublimePackagesEvaluator = {
 };
 
 SublimePackagesEvaluator.initialize = function(){
-  console.log("initalized");
-
+ 
   //************************
   // ******   USER    ******
   //************************
@@ -101,7 +100,7 @@ SublimePackagesEvaluator.initialize = function(){
 
     $('form.review-form').hide()
 
-    packageCollection.fetch(newPackageName);
+    packageCollection.fetch(newPackageName);  
 
   });
 
@@ -133,23 +132,49 @@ function PackageView(model){
 PackageView.prototype.render = function(){
   var that = this;
   var newPackage = $('<li>');
-  newPackage.html("<a href=\"https://sublime.wbond.net/packages/" + this.model.name + "\" target=\"_blank\">" + this.model.name + "</a>" + '</br>' + 
+  newPackageTitle = $('<a>').attr("href","https://sublime.wbond.net/packages/" + this.model.name).attr('target','_blank').html(this.model.name).addClass('package-title');
+
+  // newPackage.html("<a href=\"https://sublime.wbond.net/packages/" + this.model.name + "\" target=\"_blank\">" + this.model.name + "</a>" + '</br>' + 
+  //                 this.model.description + '</br>' +
+  //                 this.model.author + '</br>' +
+  //                 this.model.platforms + '</br>' +
+  //                 this.model.downloads + '</br>' +
+  //                 this.model.installs_rank + '</br>' +
+  //                 this.model.rating + '</br>'                                  
+  //                 ); 
+
+
+  newPackage.html('</br>' +
                   this.model.description + '</br>' +
                   this.model.author + '</br>' +
                   this.model.platforms + '</br>' +
                   this.model.downloads + '</br>' +
                   this.model.installs_rank + '</br>' +
                   this.model.rating + '</br>'                                  
-                  );  
+                  );   
+  newPackage.prepend(newPackageTitle);
 
   // *****   show/hide reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
+
+
+reviewsCount = this.model.reviews.length;
+console.log(reviewsCount);
+
+  var reviewsTotal = $('<h3>').html(reviewsCount);
+  reviewsList.append(reviewsTotal);
   $.each(this.model.reviews, function(idx, ele){
 
     var deleteButton = '';
+
     if (window.currentUser && window.currentUser.id == ele.user_id) { 
-      deleteButton = "<p>delete</p>";
-    }
+      deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");     
+
+    //   deleteButton.on('click', function(e){
+    //     e.preventDefault();
+    //     console.log("Delete this review: " + ele.title + "(" + ele.id + ")");
+    //   })  
+     }
 
     var reviewsItem = $('<li>');
     reviewsItem.html(ele.title + '<br />' +
@@ -157,10 +182,9 @@ PackageView.prototype.render = function(){
                      ele.description + '<br />' +
                      ele.platform + '<br />' +
                      ele.rating + '<br />' +
-                     ele.datetime + '<br />' +
-                     deleteButton
+                     ele.datetime + '<br />'                     
                     );       
-
+    reviewsItem.append(deleteButton);
     reviewsList.append(reviewsItem);
   });
 
@@ -227,6 +251,9 @@ PackageCollection.prototype.fetch = function(packageName){
 };
 
 function clearAndDisplayPackageList(){
+  var packagesTotal = packageCollection.models.length;
+console.log(packagesTotal);
+  // $('.packages-total').html('<p>'+packagesTotal+'</p>');
   $('.packages').html('');
   for(idx in packageCollection.models){
     var package = packageCollection.models[idx];
@@ -250,11 +277,11 @@ $(function(){
   var reviewsList = $('.reviews');
   // reviewsList.hide();
 
-  $('.package-form').on('submit', function(e){
+  $('.package-search-form').on('submit', function(e){
     e.preventDefault();
     packageCollection.models = {}
-    var newName = $('.package-form input[name="package_name"]').val();
-    $('.package-form input[name="package_name"]').val('');
+    var newName = $('.package-search-form input[name="package_name"]').val();
+    $('.package-search-form input[name="package_name"]').val('');
     packageCollection.fetch(newName);
   })
   

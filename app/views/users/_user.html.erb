@@ -1,13 +1,40 @@
-<!-- using form helpers  -->
-<%= form_for @user do |f| %>
-    <%= f.label :username %>*
-    <%= f.text_field :username %><br/>
-    <%= f.label :email %>*
-    <%= f.text_field :email %><br/>
-    <%= f.label :password %>*
-    <%= f.password_field :password %><br/>
-    <%= f.label :avatar_url %>
-    <%= f.text_field :avatar_url %><br/>
-    <%= f.submit %>
-    * required fields
-<% end %>
+
+<form action="/users" method="post" class="form-horizontal">
+
+  <%= token_tag %>
+  <div class="control-group">
+    <label class="control-label" for="username">Username*</label>
+    <div class="controls">
+      <input type="text" id="username" name="user[username]">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="email">Email*</label>
+    <div class="controls">
+      <input type="text" id="email" name="user[email]">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="password">Password*</label>
+    <div class="controls">
+      <input type="password" id="password" name="user[password]">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="avatar_url">Avatar Url</label>
+    <div class="controls">
+      <input type="text" id="avatar_url" name="user[avatar_url]">
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <button type="submit" class="controls btn btn-inverse">Sign Up</button>
+    <div class="controls form-end">* required fields</div>
+  </div>
+  
+</form>
+
+

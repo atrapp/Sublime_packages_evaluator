@@ -1,10 +1,26 @@
-<h2>Log-In</h2>
 
-<!-- using form helpers  -->
-<%= form_tag sessions_path do %>
-    <%= label_tag :email %>
-    <%= text_field_tag :email %>
-    <%= label_tag :password %>
-    <%= password_field_tag :password %>
-    <%= submit_tag(value = "Log in") %>
-<% end %>
+
+<h2>Log In</h2>
+
+<form action="/sessions" method="post" class="form-horizontal">
+
+  <%= token_tag %>
+  <div class="control-group">
+    <label class="control-label" for="email">Email</label>
+    <div class="controls">
+      <input type="text" id="email" name="email">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="password">Password</label>
+    <div class="controls">
+      <input type="password" id="password" name="password">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <button type="submit" class="controls btn btn-inverse">Log In</button>    
+  </div>
+  
+</form>
