@@ -34,8 +34,9 @@ require 'sublime_package_API'
     
     packages_and_reviews = packages.map do |package|
       # if reviews = Review.find_by( {package_name: package['name']} )
-      if reviews = Review.where( package_name: package['name'] ).map(&:to_display)
-        
+      # if reviews = Review.where( package_name: package['name'] ).map(&:to_display)
+
+      if reviews = Review.order(datetime: :desc).where( package_name: package['name'] ).map(&:to_display)  
         package['reviews'] = reviews
       end
       package

@@ -148,9 +148,10 @@ PackageView.prototype.render = function(){
   // *****   show/hide reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
 
-  reviewsCount = this.model.reviews.length;
+  reviewsCount = this.model.reviews.length;  
+  var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-  var reviewsTotal = $('<h3>').html(reviewsCount);
+  var reviewsTotal = $('<h3>').html(reviewsTitleText);
   reviewsList.append(reviewsTotal);
   $.each(this.model.reviews, function(idx, ele){
 
