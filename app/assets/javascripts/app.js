@@ -131,35 +131,22 @@ function PackageView(model){
 
 PackageView.prototype.render = function(){
   var that = this;
-  var newPackage = $('<li>');
+  var newPackage = $('<tr>').append("<td colspan='2'>");
   newPackageTitle = $('<a>').attr("href","https://sublime.wbond.net/packages/" + this.model.name).attr('target','_blank').html(this.model.name).addClass('package-title');
 
-  // newPackage.html("<a href=\"https://sublime.wbond.net/packages/" + this.model.name + "\" target=\"_blank\">" + this.model.name + "</a>" + '</br>' + 
-  //                 this.model.description + '</br>' +
-  //                 this.model.author + '</br>' +
-  //                 this.model.platforms + '</br>' +
-  //                 this.model.downloads + '</br>' +
-  //                 this.model.installs_rank + '</br>' +
-  //                 this.model.rating + '</br>'                                  
-  //                 ); 
-
-
-  newPackage.html('</br>' +
-                  this.model.description + '</br>' +
-                  this.model.author + '</br>' +
-                  this.model.platforms + '</br>' +
-                  this.model.downloads + '</br>' +
-                  this.model.installs_rank + '</br>' +
-                  this.model.rating + '</br>'                                  
+  newPackage.html(
+                  "<tr><td colspan='2'>" + this.model.description + '</td></tr>' +
+                  '<tr><td class="package-label">Author:</td><td>' + this.model.author + '</td></tr>' +
+                  '<tr><td class="package-label">Platforms:</td><td>' + this.model.platforms + '</td></tr>' +
+                  '<tr><td class="package-label">Downloads:</td><td>' + this.model.downloads + '</td></tr>' +
+                  '<tr><td class="package-label">Rank:</td><td>' + this.model.installs_rank + '</td></tr>'                                                
                   );   
   newPackage.prepend(newPackageTitle);
 
   // *****   show/hide reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
 
-
-reviewsCount = this.model.reviews.length;
-console.log(reviewsCount);
+  reviewsCount = this.model.reviews.length;
 
   var reviewsTotal = $('<h3>').html(reviewsCount);
   reviewsList.append(reviewsTotal);
@@ -190,7 +177,7 @@ console.log(reviewsCount);
 
   reviewsList.hide();
   
-  var showHideReviewsButton = $('<button>Show/Hide Reviews</button>');
+  var showHideReviewsButton = $('<button>Show/Hide Reviews</button>').addClass('package-button');
   showHideReviewsButton.on('click', function(){
     reviewForm.hide('slow');
     reviewsList.toggle();
@@ -200,7 +187,7 @@ console.log(reviewsCount);
 
   // *****   write review   ****** 
   if (window.currentUser){
-    var writeReviewButton = $('<button>Write a Review</button>');
+    var writeReviewButton = $('<button>Write a Review</button>').addClass('package-button');
 
     writeReviewButton.on('click', function(){  
       reviewForm.show(100, function(){
@@ -230,7 +217,6 @@ PackageCollection.prototype.add = function(packageJSON){
   var that = this;
   var newPackage = new Package(packageJSON);
   this.models[packageJSON.name] = newPackage;
-
   $(this).trigger('addFlare');
   return this;
 }
@@ -241,8 +227,7 @@ PackageCollection.prototype.fetch = function(packageName){
   $.ajax({
     url: '/search?package_name='+packageName,
     dataType: 'json',
-    success: function(data){
-      console.log(data)
+    success: function(data){      
       for (idx in data){         
         that.add(data[idx]);
       }
@@ -251,15 +236,15 @@ PackageCollection.prototype.fetch = function(packageName){
 };
 
 function clearAndDisplayPackageList(){
-  var packagesTotal = packageCollection.models.length;
-console.log(packagesTotal);
-  // $('.packages-total').html('<p>'+packagesTotal+'</p>');
+  var packagesTotal = 0;  
   $('.packages').html('');
   for(idx in packageCollection.models){
+    packagesTotal += 1;
     var package = packageCollection.models[idx];
     var packageView = new PackageView(package);
     $('.packages').append(packageView.render().el);
   }
+  $('.packages-total').html('<p>'+packagesTotal+' results found</p>');
 }
 
 var packageCollection = new PackageCollection(); 
