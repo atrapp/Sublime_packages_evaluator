@@ -54,7 +54,7 @@ h2 {
 h3 {  
   font-family: 'Calligraffitti', cursive;  
   font-size: 30px;
-  padding: 10px;
+  padding: 20px;
   padding-top: 30px;    
 }
 
@@ -92,6 +92,7 @@ small {
   width: 400px;
   height: 30px;
   margin-top: 20px;
+  margin-bottom: 30px; 
   padding: 10px 20px 10px 20px;  
   font-family: 'Calligraffitti', cursive;  
   font-size: 30px;
@@ -125,6 +126,13 @@ ul li {
   margin-bottom: 50px;
 }
 
+.review-form p {
+  font-family: 'Calligraffitti', cursive;  
+  font-size: 30px;
+  padding: 10px;
+  padding-top: 30px;   
+}
+
 .review-form label {
   margin: 10px;
   font-size: 16px;
@@ -138,13 +146,13 @@ ul li {
 .review-form input[type=text] {
   padding: 5px;
   margin: 10px;
-  width: 400px;
+  width: 93%;
   height: 40px;
 }
 
 .review-form textarea {
   margin: 10px;
-  width: 600px;
+  width: 93%;
   height: 200px;
 }
 
@@ -163,7 +171,7 @@ ul li {
 .reviews {
   background: url("/images/paper.png");
   padding: 0;
-  width: 700px;
+  /*width: 700px;*/
 }
 
 .reviewListItem {
@@ -279,6 +287,17 @@ div.form-end {
 
 }
 
+/**********************************************************/
+
+@media (max-width: 700px) {
+
+  .review-form label[for=review-rating],
+  .review-form label[for=review-platform] {
+    width: 60px;
+  }
+
+}
+
 
 /**********************************************************/
 
@@ -343,10 +362,10 @@ div.form-end {
     font-size: 40px;
   }
 
-  .packages-total {
-    margin-top: 0;
-    font-size: 20px;
+  .review-form p {
+    font-size: 25px;
   }
+
 
 }
 
