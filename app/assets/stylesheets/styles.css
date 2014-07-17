@@ -1,6 +1,5 @@
 body {
-  background-color: blue;
-  background: url("https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/public/images/halftone.png");  
+  background: url("/images/halftone.png");
   font-family: 'Open Sans',Helvetica,Arial,Verdana,sans-serif;
   margin: 0;
   padding: 0;
@@ -121,7 +120,7 @@ ul li {
 
 .review-form {
   /*background: url("notebook.png");*/
-  background-image: url(<%= asset_path 'notebook.png' %>)
+  background: url("/images/notebook.png");
   font-size: 16px;
   margin-bottom: 50px;
 }
