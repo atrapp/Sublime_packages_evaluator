@@ -168,14 +168,15 @@ PackageView.prototype.render = function(){
     //   })  
     //  }
 
+    // *****   create the reviews list   ****** 
     var reviewsItem = $('<li>');
-    reviewsItem.html(ele.title + '<br />' +
-                     ele.username + '<br />' +
-                     ele.description + '<br />' +
-                     ele.platform + '<br />' +
-                     ele.rating + '<br />' +
-                     ele.datetime + '<br />'                     
-                    );       
+    reviewsItem.html('<p>' + ele.username + '   (Rating: ' + ele.rating + ')</p>' +
+                     '<p> wrote on <span>' + ele.datetime + '</span></p>' +
+                     '<h4>' + ele.title + '</h4>' +                     
+                     '<p>' + ele.description + '</p>' +
+                     '<p>Platform: ' + ele.platform + '</p>'                                      
+                    );  
+    reviewsItem.addClass('reviewListItem');     
     reviewsItem.append(deleteButton);
     reviewsList.append(reviewsItem);
   });

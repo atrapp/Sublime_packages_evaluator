@@ -161,8 +161,34 @@ ul li {
 }
 
 .reviews {
-  /*background: url("paper.png");*/
   background: url("/images/paper.png");
+  padding: 0;
+  width: 700px;
+}
+
+.reviewListItem {
+  /*background: url("paper.png");*/
+  background: url("/images/notebook.png");
+  margin: 40px 0;  
+  padding: 10px;
+  font-size: 16px;
+}
+
+.reviewListItem h4 {
+  font-weight: bold; 
+  font-size: 20px;
+}
+
+.reviewListItem p:nth-child(2) {
+  font-size: 14px; 
+}
+
+.reviewListItem p:nth-of-type(3) { 
+  padding: 30px 10px;
+}
+
+.reviewListItem span {
+  font-style: italic;
 }
 
 .d3chart {
