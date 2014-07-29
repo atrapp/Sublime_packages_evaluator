@@ -116,13 +116,10 @@ SublimePackagesEvaluator.initialize = function(){
 // ************ Model *************
 function Package(packageJSON){
   this.name = packageJSON.name;
-  if (packageJSON.highlighted_description) {
-    this.description = packageJSON.highlighted_description;  
-  } else {
-    this.description = packageJSON.description; 
-  };
+  this.description = packageJSON.highlighted_description;  
   this.author = packageJSON.author;
-  this.platforms = packageJSON.platforms;  
+  this.platforms = packageJSON.platforms;
+  // this.downloads = packageJSON.unique_installs;
   this.unique_installs = packageJSON.unique_installs;
   this.installs_rank = packageJSON.installs_rank;
   this.reviews = packageJSON.reviews;
@@ -144,6 +141,7 @@ PackageView.prototype.render = function(){
                   "<tr><td colspan='2'>" + this.model.description + '</td></tr>' +
                   '<tr><td class="package-label">Author:</td><td>' + this.model.author + '</td></tr>' +
                   '<tr><td class="package-label">Platforms:</td><td>' + this.model.platforms + '</td></tr>' +
+                  // '<tr><td class="package-label">Downloads:</td><td>' + this.model.downloads + '</td></tr>' +
                   '<tr><td class="package-label">Unique installs:</td><td>' + this.model.unique_installs + '</td></tr>' +
                   '<tr><td class="package-label">Rank:</td><td>' + this.model.installs_rank + '</td></tr>'                                                
                   );   
@@ -155,11 +153,8 @@ PackageView.prototype.render = function(){
   reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-  // var reviewsTotal = $('<h3>').html(reviewsTitleText);
-  // reviewsList.append(reviewsTotal);
-  var reviewsTotal = $('<h4>').html(reviewsTitleText);
-  newPackage.append(reviewsTotal);
-
+  var reviewsTotal = $('<h3>').html(reviewsTitleText);
+  reviewsList.append(reviewsTotal);
   $.each(this.model.reviews, function(idx, ele){
 
       deleteButton = '';
@@ -196,9 +191,7 @@ PackageView.prototype.render = function(){
     reviewsList.toggle();
   });  
 
-  if (reviewsCount > 0) {
-    newPackage.append(showHideReviewsButton); 
-  }; 
+  newPackage.append(showHideReviewsButton);  
 
   // *****   write review   ****** 
   if (window.currentUser){
@@ -251,38 +244,17 @@ PackageCollection.prototype.fetch = function(packageName){
   })
 };
 
-PackageCollection.prototype.fetchTop25 = function(){
-  console.log("in fetchTop25");
-  var that = this;
-  $.ajax({
-    url: '/gettop25',
-    dataType: 'json',
-    success: function(data){      
-      for (idx in data){         
-        that.add(data[idx]);
-      }
-    }
-  })
-};
-
 function clearAndDisplayPackageList(searchPackageName){
-  
-  resultsText = searchPackageName || '';
-
-  var packagesTotal = 0; 
+   
+  var packagesTotal = 0;  
   $('.packages').html('');
   for(idx in packageCollection.models){
     packagesTotal += 1;
     var package = packageCollection.models[idx];
     var packageView = new PackageView(package);
     $('.packages').append(packageView.render().el);
-  };
-
-  if (resultsText == '') {
-    $('.packages-total').html('<p>Top 25 Sublime Packages</p>');
-  } else {
-    $('.packages-total').html('<p>'+packagesTotal+' results for "' + resultsText + '"</p>');
-  };
+  }
+  $('.packages-total').html('<p>'+packagesTotal+' results for "' + searchPackageName + '"</p>');
   
     // ************   D3 Visualization ************
     packages = new Array;
@@ -292,9 +264,9 @@ function clearAndDisplayPackageList(searchPackageName){
 
     removeSvg();    
     buildSvg();
-    bubbleChart();
+    //bubbleChart();
     //bubbleChartRadius();
-    // barChart();
+    barChart();
 
     // removeSvgBubbleChart();    
     // buildSvgBubbleChart();
@@ -342,8 +314,6 @@ $(function(){
   // *****  D3 Visualization   *****
   // *******************************
   
-  packageCollection.fetchTop25();
-
   // *****   chart legend   *****
   $chartlegend = $('#d3chartlegend');
   $chartlegend.append($('<h4>').html("Sublime Packages Chart Legend")); 
@@ -370,19 +340,16 @@ $(function(){
 
   // *****   bubblechart   *****
   $('#d3bubblechart').append($('<h4>').html("Sublime Packages Bubble Chart"));
-  // removeSvg();    
-  // buildSvg();
-  // bubbleChart();
-  //bubbleChartRadius();
-  //barChart();
+
 
   // *****   bubblechartradius   *****
   $('#d3bubblechartradius').append($('<h4>').html("Sublime Packages Bubble Chart by Radius"));
-   //bubbleChartRadius();
+ 
 
   // *****   barchartchart   *****
   $('#d3barchart').append($('<h4>').html("Sublime Packages Bar Chart"));
-  //barChart();
+ 
+
 
 })
 

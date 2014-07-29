@@ -9,4 +9,12 @@ module SublimePackageAPI
     
   end 
 
+  def self.get_top25()
+
+    url = "https://sublime.wbond.net/browse/popular.json"
+    response = HTTParty.get(url)    
+    response['packages'] # returns a list of top 25 packages
+    
+  end 
+
 end

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :packages, except: [:new, :edit]
   get '/search' => 'packages#search'
+  get '/gettop25' => 'packages#gettop25'
 
   resources :reviews, except: [:new, :edit]
     
