@@ -324,23 +324,23 @@ function clearAndDisplayPackageList(searchPackageName){
         packages.push(packageCollection.models[key]);       
       });   
 
-    removeSvg();    
-    buildSvg();
-    bubbleChart();
-    //bubbleChartRadius();
-    // barChart();
-
-    // removeSvgBubbleChart();    
-    // buildSvgBubbleChart();
+    // removeSvg();    
+    // buildSvg();
     // bubbleChart();
-
-    // removeSvgBubbleChartRadius();
-    // buildSvgBubbleChartRadius();
-    // bubbleChartRadius();
-
-    // removeSvgBarChart();
-    // buildSvgBarChart();
+    // // bubbleChartRadius();
     // barChart();
+
+    removeSvgBubbleChart(); 
+    buildSvgBubbleChart();
+    bubbleChart();
+
+    removeSvgBubbleChartRadius();
+    buildSvgBubbleChartRadius();
+    bubbleChartRadius();
+
+    removeSvgBarChart();
+    buildSvgBarChart();
+    barChart();
     // ********************************************
 }
 
