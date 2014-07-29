@@ -55,5 +55,6 @@ gem 'backbone-on-rails'
 
 gem 'httparty'
 
+gem "font-awesome-rails"
 
 

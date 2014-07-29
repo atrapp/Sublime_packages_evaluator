@@ -155,68 +155,84 @@ PackageView.prototype.render = function(){
   reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-    // var reviewsTotal = $('<h3>').html(reviewsTitleText);
+  // var reviewsTotal = $('<h3>').html(reviewsTitleText);
   // reviewsList.append(reviewsTotal);
   var reviewsTotal = $('<h4>').html(reviewsTitleText);
   newPackage.append(reviewsTotal);
 
-  var packageRating = 0
-  $.each(this.model.reviews, function(idx, ele){
-    packageRating = packageRating + parseInt(ele.rating);    
-  });
-
-  var packageRatingAvg = Math.floor(packageRating/reviewsCount);
-
-  for (i=0;i< packageRatingAvg;i++) {
-
-    newPackage.append('<i class="fa fa-star fa-2x"></i>');
-  }
-
-  var packageRatingText = packageRatingAvgtoString();
-  var packageRatingTotal = $('<h4>').html(packageRatingText);
-  newPackage.append(packageRatingTotal);
-
-
-  $.each(this.model.reviews, function(idx, ele){
-
-      deleteButton = '';
-
-    // will be added later
-    // if (window.currentUser && window.currentUser.id == ele.user_id) { 
-    //   deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
-    //   deleteButton.on('click', function(e){
-    //     e.preventDefault();
-    //     console.log("Delete this review: " + ele.title + "(" + ele.id + ")");
-    //     console.log("Index: " + idx + " in " + that.model.reviews);
-    //     that.model.reviews.splice(idx, 1);
-    //   })  
-    //  }
-
-    // *****   create the reviews list   ****** 
-    var reviewsItem = $('<li>');
-    reviewsItem.html('<p>' + ele.username + '   (Rating: ' + ele.rating + ')</p>' +
-                     '<p> wrote on <span>' + ele.datetime + '</span></p>' +
-                     '<h4>' + ele.title + '</h4>' +                     
-                     '<p>' + ele.description + '</p>' +
-                     '<p>Platform: ' + ele.platform + '</p>'                                      
-                    );  
-    reviewsItem.addClass('reviewListItem');     
-    reviewsItem.append(deleteButton);
-    reviewsList.append(reviewsItem);
-  });
-
-  reviewsList.hide();
+  if (reviewsCount > 0) { 
   
-  // *****   show/hide reviews   ******
-  var showHideReviewsButton = $('<button>Show/Hide Reviews</button>').addClass('package-button');
-  showHideReviewsButton.on('click', function(){
-    reviewForm.hide('slow');
-    reviewsList.toggle();
-  });  
+    var packageRating = 0
+    $.each(this.model.reviews, function(idx, ele){
+      packageRating = packageRating + parseInt(ele.rating);    
+    });
 
-  if (reviewsCount > 0) {
+    var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+    var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+    var stars = 5;
+    for (i=0;i< packageRatingAvgR;i++) {
+      // newPackage.append('<i class="fa fa-star fa-2x"></i>');
+      newPackage.append('<i class="fa fa-star"></i>');
+      stars--;
+    };
+
+    if ( (packageRating%reviewsCount) != 0 ) {
+      newPackage.append('<i class="fa fa-star-half-o"></i>');
+      stars--;
+    };
+
+    while (stars > 0) {
+      newPackage.append('<i class="fa fa-star-o"></i>');
+      stars--;
+    }
+
+    var packageRatingText = packageRatingAvg.toString();
+    var packageRatingTotal = $('<h4>').html(packageRatingText);
+    //var packageRatingTotal = $('<span>').html(packageRatingText);
+    newPackage.append(packageRatingTotal);
+
+
+    $.each(this.model.reviews, function(idx, ele){
+
+        deleteButton = '';
+
+      // will be added later
+      // if (window.currentUser && window.currentUser.id == ele.user_id) { 
+      //   deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
+      //   deleteButton.on('click', function(e){
+      //     e.preventDefault();
+      //     console.log("Delete this review: " + ele.title + "(" + ele.id + ")");
+      //     console.log("Index: " + idx + " in " + that.model.reviews);
+      //     that.model.reviews.splice(idx, 1);
+      //   })  
+      //  }
+
+      // *****   create the reviews list   ****** 
+      var reviewsItem = $('<li>');
+      reviewsItem.html('<p>' + ele.username + '   (Rating: ' + ele.rating + ')</p>' +
+                       '<p> wrote on <span>' + ele.datetime + '</span></p>' +
+                       '<h4>' + ele.title + '</h4>' +                     
+                       '<p>' + ele.description + '</p>' +
+                       '<p>Platform: ' + ele.platform + '</p>'                                      
+                      );  
+      reviewsItem.addClass('reviewListItem');     
+      reviewsItem.append(deleteButton);
+      reviewsList.append(reviewsItem);
+    });
+
+    reviewsList.hide();
+    
+    // *****   show/hide reviews   ******
+    var showHideReviewsButton = $('<button>Show/Hide Reviews</button>').addClass('package-button');
+    showHideReviewsButton.on('click', function(){
+      reviewForm.hide('slow');
+      reviewsList.toggle();
+    });
+  
     newPackage.append(showHideReviewsButton); 
-  }; 
+
+  }; // if (reviewsCount > 0)
 
   // *****   write review   ****** 
   if (window.currentUser){
