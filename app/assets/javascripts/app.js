@@ -126,7 +126,7 @@ function Package(packageJSON){
   this.unique_installs = packageJSON.unique_installs;
   this.installs_rank = packageJSON.installs_rank;
   this.reviews = packageJSON.reviews;
-  this.rating = "3";  
+  // this.rating = "";  
 }
 
 // ************ View *************
@@ -149,16 +149,33 @@ PackageView.prototype.render = function(){
                   );   
   newPackage.prepend(newPackageTitle);
 
-  // *****   show/hide reviews   ******
+  // *****   Package reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
 
   reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-  // var reviewsTotal = $('<h3>').html(reviewsTitleText);
+    // var reviewsTotal = $('<h3>').html(reviewsTitleText);
   // reviewsList.append(reviewsTotal);
   var reviewsTotal = $('<h4>').html(reviewsTitleText);
   newPackage.append(reviewsTotal);
+
+  var packageRating = 0
+  $.each(this.model.reviews, function(idx, ele){
+    packageRating = packageRating + parseInt(ele.rating);    
+  });
+
+  var packageRatingAvg = Math.floor(packageRating/reviewsCount);
+
+  for (i=0;i< packageRatingAvg;i++) {
+
+    newPackage.append('<i class="fa fa-star fa-2x"></i>');
+  }
+
+  var packageRatingText = packageRatingAvgtoString();
+  var packageRatingTotal = $('<h4>').html(packageRatingText);
+  newPackage.append(packageRatingTotal);
+
 
   $.each(this.model.reviews, function(idx, ele){
 
@@ -190,6 +207,7 @@ PackageView.prototype.render = function(){
 
   reviewsList.hide();
   
+  // *****   show/hide reviews   ******
   var showHideReviewsButton = $('<button>Show/Hide Reviews</button>').addClass('package-button');
   showHideReviewsButton.on('click', function(){
     reviewForm.hide('slow');
