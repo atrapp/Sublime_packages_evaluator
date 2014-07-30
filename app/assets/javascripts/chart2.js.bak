@@ -408,12 +408,12 @@ function bubbleChartRadius2() {
     }
 
     svgBubbleChartRadius.selectAll("circle")
-            .data(packages)
+        .data(packages)
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
 
     svgBubbleChartRadius.selectAll("text")
-            .data(packages)
+        .data(packages)
         .attr("dx", function(d) { return d.x-25; })
         .attr("dy", function(d) { return d.y; });
 

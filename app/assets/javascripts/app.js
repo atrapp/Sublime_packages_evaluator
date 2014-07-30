@@ -300,10 +300,11 @@ PackageCollection.prototype.fetchTop25 = function(){
 };
 
 function clearAndDisplayPackageList(searchPackageName){
-  
+
   resultsText = searchPackageName || '';
 
   var packagesTotal = 0; 
+  
   $('.packages').html('');
   for(idx in packageCollection.models){
     packagesTotal += 1;
@@ -330,17 +331,17 @@ function clearAndDisplayPackageList(searchPackageName){
     // // bubbleChartRadius();
     // barChart();
 
-    removeSvgBubbleChart(); 
-    buildSvgBubbleChart();
-    bubbleChart();
+    // removeSvgBubbleChart(); 
+    // buildSvgBubbleChart();
+   bubbleChart2();
 
-    removeSvgBubbleChartRadius();
-    buildSvgBubbleChartRadius();
-    bubbleChartRadius();
+    // removeSvgBubbleChartRadius();
+    // buildSvgBubbleChartRadius();
+    // bubbleChartRadius2();
 
-    removeSvgBarChart();
-    buildSvgBarChart();
-    barChart();
+    // removeSvgBarChart();
+    // buildSvgBarChart();
+    barChart2();
     // ********************************************
 }
 
@@ -365,11 +366,18 @@ $(function(){
     packageCollection.models = {}
     searchPackageName = $('.package-search-form input[name="package_name"]').val();
     $('.package-search-form input[name="package_name"]').val('');
-    packageCollection.fetch(searchPackageName);   
+    packageCollection.fetch(searchPackageName);      
   })
   
   $(packageCollection).on('addFlare', function(){
     clearAndDisplayPackageList(searchPackageName);
+      //   removeSvg();
+      // buildSvg();  
+      //   bubbleChart();
+
+    // removeSvgBubbleChart(); 
+    // buildSvgBubbleChart();
+    // bubbleChart2();
   })
 
   // *******************************
@@ -404,19 +412,17 @@ $(function(){
 
   // *****   bubblechart   *****
   $('#d3bubblechart').append($('<h4>').html("Sublime Packages Bubble Chart"));
-  // removeSvg();    
-  // buildSvg();
-  // bubbleChart();
-  //bubbleChartRadius();
-  //barChart();
 
   // *****   bubblechartradius   *****
   $('#d3bubblechartradius').append($('<h4>').html("Sublime Packages Bubble Chart by Radius"));
-   //bubbleChartRadius();
 
   // *****   barchartchart   *****
   $('#d3barchart').append($('<h4>').html("Sublime Packages Bar Chart"));
-  //barChart();
 
+  // buildSvg();
+  buildSvgBubbleChart();
+  buildSvgBubbleChartRadius();
+  buildSvgBarChart();
+  
 })
 
