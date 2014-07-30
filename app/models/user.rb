@@ -1,5 +1,15 @@
 class User < ActiveRecord::Base
-  authenticates_with_sorcery!
+
+  # attr_accessible :email, :password, :password_confirmation, :authentications_attributes
+  authenticates_with_sorcery! do |config|
+    config.authentications_class = Authentication
+  end
+
+  has_many :authentications, :dependent => :destroy
+  accepts_nested_attributes_for :authentications
+  
+
+  # authenticates_with_sorcery!
 
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, on: :create
@@ -13,4 +23,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
 
   has_many  :reviews
+
+
+
+
 end

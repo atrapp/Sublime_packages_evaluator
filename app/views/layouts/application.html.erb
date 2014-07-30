@@ -16,13 +16,19 @@
         <div class="container">
           
             <div class="login">
+
               <% if current_user %>
                   <p>Logged in as <%= current_user.email %></p>
                   <%= link_to "LogOut", logout_path, method: :delete %>
               <% else %>
+                  <%= link_to 'Login with Twitter', auth_at_provider_path(:provider => :twitter) %> |
                   <%= link_to 'SignUp', signup_path %>
                   <%= link_to 'LogIn', login_path %>
               <% end %>
+                <div>
+                  <p id="notice"><%= flash[:notice] %></p>
+                  <p id="alert"><%= flash[:alert] %></p>
+                </div>
             </div>
       
             <div class="navbar-header">

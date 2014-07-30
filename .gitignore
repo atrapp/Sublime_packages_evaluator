@@ -14,3 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore sorcery.rb, since it contains secrets and keys for
+# external authentication providers (Twitter etc.) 
+/config/initializers/sorcery.rb
