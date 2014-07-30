@@ -209,6 +209,7 @@ ul li {
 
 
 /***** D3 visualization *****/
+
 #d3chartlegend {
   float: right;
   width: 500px;
@@ -298,7 +299,7 @@ div.tooltip {
   font-weight: bold;  
 }
 
-/****************************/
+/***** END D3 visualization *****/
 
 table {
   /*width: 400px;*/
@@ -370,6 +371,21 @@ div.form-end {
   margin-top: 10px;
 }
 
+/****** SignUp / Login *****/
+
+#notice {
+  color: blue;
+  font-size: 18px;
+  margin-top: 10px;  
+}
+
+#alert {
+  color: red;
+  font-size: 18px;
+  margin-top: 10px;  
+}
+
+/***** END SignUp / Login *****/
 
 /**********************************************************/
 
