@@ -12,6 +12,7 @@ class Review < ActiveRecord::Base
       title: self.title,
       user_id: self.user_id,
       username: user.username,
+      email: user.email,
       description: self.description,
       platform: self.platform,
       rating: self.rating,

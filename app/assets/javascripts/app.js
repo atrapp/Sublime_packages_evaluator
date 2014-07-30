@@ -210,7 +210,14 @@ PackageView.prototype.render = function(){
 
       // *****   create the reviews list   ****** 
       var reviewsItem = $('<li>');
-      reviewsItem.html('<p>' + ele.username + '   (Rating: ' + ele.rating + ')</p>' +
+      var reviewAuthor;
+      if (ele.username != null) {
+        reviewAuthor = ele.username;
+      } else {
+        reviewAuthor = ele.email;
+      };   
+debugger;
+      reviewsItem.html('<p>' + reviewAuthor + '   (Rating: ' + ele.rating + ')</p>' +
                        '<p> wrote on <span>' + ele.datetime + '</span></p>' +
                        '<h4>' + ele.title + '</h4>' +                     
                        '<p>' + ele.description + '</p>' +
