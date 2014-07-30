@@ -21,7 +21,8 @@
                   <p>Logged in as <%= current_user.email %></p>
                   <%= link_to "LogOut", logout_path, method: :delete %>
               <% else %>
-                  <a href="<%=auth_at_provider_path(:provider => :twitter) %>"><i class="fa fa-twitter fa-2x"></i>Login with Twitter</a> |
+                  <a href="<%=auth_at_provider_path(:provider => :twitter) %>"><i class="fa fa-twitter"></i> Login with Twitter</a> |
+                  <a href="<%=auth_at_provider_path(:provider => :facebook) %>"><i class="fa fa-facebook"></i> Login with Facebook</a> |
                   <%= link_to 'SignUp', signup_path %>
                   <%= link_to 'LogIn', login_path %>
               <% end %>
