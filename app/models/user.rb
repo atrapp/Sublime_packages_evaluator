@@ -8,9 +8,6 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
   
-
-  # authenticates_with_sorcery!
-
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, on: :create
   validates_presence_of :email, on: :create
@@ -23,8 +20,5 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
 
   has_many  :reviews
-
-
-
 
 end

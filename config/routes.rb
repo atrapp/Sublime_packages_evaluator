@@ -22,9 +22,9 @@ Rails.application.routes.draw do
 
   resources :reviews, except: [:new, :edit]
 
-post "oauth/callback" => "oauths#callback"
-get "oauth/callback" => "oauths#callback" # for use with Github
-get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
+  post "oauth/callback" => "oauths#callback"
+  get "oauth/callback" => "oauths#callback" # for use with Github
+  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
     
 end
 

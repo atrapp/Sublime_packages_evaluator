@@ -48,7 +48,6 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'sorcery'
-# gem 'omniauth-twitter'
 
 gem "twitter-bootstrap-rails"
 

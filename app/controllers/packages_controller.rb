@@ -33,9 +33,6 @@ require 'sublime_package_API'
     packages = SublimePackageAPI.find_package( params[:package_name] ) 
     
     packages_and_reviews = packages.map do |package|
-      # if reviews = Review.find_by( {package_name: package['name']} )
-      # if reviews = Review.where( package_name: package['name'] ).map(&:to_display)
-
       if reviews = Review.order(datetime: :desc).where( package_name: package['name'] ).map(&:to_display)  
         package['reviews'] = reviews
       end
@@ -50,8 +47,7 @@ require 'sublime_package_API'
   def gettop25
     packages = SublimePackageAPI.get_top25() 
     
-    packages_and_reviews = packages.map do |package|
-     
+    packages_and_reviews = packages.map do |package|     
       if reviews = Review.order(datetime: :desc).where( package_name: package['name'] ).map(&:to_display)  
         package['reviews'] = reviews
       end
