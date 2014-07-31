@@ -14,15 +14,16 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
+//= require app_object
+//= require_tree ../templates/.
+//= require_tree ./models/.
+//= require_tree ./collections/.
+//= require views/reviews/reviewView.js
+//= require views/reviews/reviewListView.js
+//= require views/users/userListView.js
+//= require views/users/userView.js
 //= require app
-//= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require ./views/reviews/reviewView.js
-//= require ./views/reviews/reviewListView.js
-//= require_tree ./views
-//= require_tree ./routers
-//= require_tree .
+
 
 // determines the definite load order of files
 

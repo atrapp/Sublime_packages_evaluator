@@ -1,10 +1,3 @@
-window.SublimePackagesEvaluator = {
-  Models: {},
-  Collections: {},
-  Views: {},
-  Routers: {},
-};
-
 SublimePackagesEvaluator.initialize = function(){
   debugger;
   //************************
@@ -438,7 +431,7 @@ var packageCollection = new PackageCollection();
 
 $(function(){
   debugger;
-  
+
   SublimePackagesEvaluator.initialize();
 
   reviewForm = $('form.review-form');
