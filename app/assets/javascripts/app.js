@@ -1,25 +1,25 @@
 SublimePackagesEvaluator.initialize = function(){
-  debugger;
+
   //************************
   // ******   USER    ******
   //************************
-  var userCollection = new SublimePackagesEvaluator.Collections.Users();
+  // var userCollection = new SublimePackagesEvaluator.Collections.Users();
 
-  var userListView = new SublimePackagesEvaluator.Views.UserListView({
-    collection: userCollection,
-    el: $('.users') 
-  });
+  // var userListView = new SublimePackagesEvaluator.Views.UserListView({
+  //   collection: userCollection,
+  //   el: $('.users') 
+  // });
 
-  userCollection.fetch(); 
+  // userCollection.fetch(); 
 
-  $('form.user-form').on('submit', function(e){
-    e.preventDefault();
-    var emailField = $("form.user-form input[name='user-email'")
-    var newEmail = emailField.val();
-    emailField.val('');
+  // $('form.user-form').on('submit', function(e){
+  //   e.preventDefault();
+  //   var emailField = $("form.user-form input[name='user-email'")
+  //   var newEmail = emailField.val();
+  //   emailField.val('');
   
-    userCollection.create({email: newEmail});   
-  });
+  //   userCollection.create({email: newEmail});   
+  // });
 
   //***************************
   // ******   REVIEWS    ******
@@ -98,8 +98,8 @@ SublimePackagesEvaluator.initialize = function(){
     packageCollection.fetch(newPackageName);
   });
 
-  // *****   delete a review    ******
-};
+  
+}; // end of SublimePackagesEvaluator.initialize 
 
 //***************************
 // ******   SUBLIME    ******
@@ -203,13 +203,13 @@ PackageView.prototype.render = function(){
           console.log("Delete this review: " + ele.title + " (id:" + ele.id + ")");
           console.log("Index: " + idx + " in " + that.model.reviews);
           var $this = this;
-          debugger;
+    
           $.ajax({   
             url: '/reviews/'+ele.id,
             type: 'DELETE',
             dataType: 'json',
             success: function(data) {      
-                debugger;
+           
                 $reviewEl.hide();
                 console.log('Delete successful');
                 console.log(data);
@@ -430,7 +430,7 @@ var packageCollection = new PackageCollection();
 
 
 $(function(){
-  debugger;
+
 
   SublimePackagesEvaluator.initialize();
 
