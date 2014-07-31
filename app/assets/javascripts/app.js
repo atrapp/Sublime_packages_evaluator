@@ -7,26 +7,26 @@ window.SublimePackagesEvaluator = {
 
 SublimePackagesEvaluator.initialize = function(){
  
-  //************************
-  // ******   USER    ******
-  //************************
-  var userCollection = new SublimePackagesEvaluator.Collections.Users();
+  // //************************
+  // // ******   USER    ******
+  // //************************
+  // var userCollection = new SublimePackagesEvaluator.Collections.Users();
 
-  var userListView = new SublimePackagesEvaluator.Views.UserListView({
-    collection: userCollection,
-    el: $('.users') 
-  });
+  // var userListView = new SublimePackagesEvaluator.Views.UserListView({
+  //   collection: userCollection,
+  //   el: $('.users') 
+  // });
 
-  userCollection.fetch(); 
+  // userCollection.fetch(); 
 
-  $('form.user-form').on('submit', function(e){
-    e.preventDefault();
-    var emailField = $("form.user-form input[name='user-email'")
-    var newEmail = emailField.val();
-    emailField.val('');
+  // $('form.user-form').on('submit', function(e){
+  //   e.preventDefault();
+  //   var emailField = $("form.user-form input[name='user-email'")
+  //   var newEmail = emailField.val();
+  //   emailField.val('');
   
-    userCollection.create({email: newEmail});   
-  });
+  //   userCollection.create({email: newEmail});   
+  // });
 
   //***************************
   // ******   REVIEWS    ******
