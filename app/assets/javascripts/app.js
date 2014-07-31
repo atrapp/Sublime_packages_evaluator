@@ -437,6 +437,8 @@ var packageCollection = new PackageCollection();
 
 
 $(function(){
+  debugger;
+  
   SublimePackagesEvaluator.initialize();
 
   reviewForm = $('form.review-form');
