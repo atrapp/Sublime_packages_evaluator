@@ -23,6 +23,7 @@
 //= require views/users/userListView.js
 //= require views/users/userView.js
 //= require app
+//= require_tree .
 
 
 // determines the definite load order of files
