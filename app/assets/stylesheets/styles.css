@@ -46,7 +46,6 @@ h1 {
 }
 
 h2 {
-  /*color: #6f92ba; */
   margin-left: 20px;
   padding-top: 20px; 
 }
@@ -126,8 +125,7 @@ ul li {
   /*background: rgba(0,0,0,0.1);*/   
 }
 
-.review-form {
-  /*background: url("notebook.png");*/
+.review-form { 
   background: url("/images/notebook.png");
   font-size: 16px;
   margin-bottom: 50px;
@@ -183,7 +181,6 @@ ul li {
 }
 
 .reviewListItem {
-  /*background: url("paper.png");*/
   background: url("/images/notebook.png");
   margin: 40px 0;  
   padding: 10px;
@@ -387,6 +384,7 @@ div.form-end {
 
 /***** END SignUp / Login *****/
 
+
 /**********************************************************/
 
 @media (max-width: 900px) {
@@ -407,7 +405,6 @@ div.form-end {
   }
 
 }
-
 
 /**********************************************************/
 
@@ -468,7 +465,6 @@ div.form-end {
 
 /**********************************************************/
 
-
 @media (max-width: 480px) {
 
   h1 { 
@@ -478,7 +474,6 @@ div.form-end {
   .review-form p {
     font-size: 25px;
   }
-
 
 }
 

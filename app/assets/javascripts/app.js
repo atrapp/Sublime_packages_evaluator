@@ -101,7 +101,7 @@ SublimePackagesEvaluator.initialize = function(){
     reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
     $('form.review-form').hide()
-
+    //debugger;
     packageCollection.fetch(newPackageName);
   });
 
@@ -289,6 +289,21 @@ PackageView.prototype.render = function(){
     });
 
     newPackage.append(writeReviewButton);
+
+      //       var that = this;
+      //   $.ajax({
+      //     url: '/search?package_name='+packageName,
+      //     dataType: 'json',
+      //     success: function(data){
+      //       if (data == '') {
+      //         that.removeAll();             
+      //       };  
+      //       for (idx in data){         
+      //         that.add(data[idx]);
+      //       }      
+      //     }
+      //   })
+      // };
   }  
   
 
