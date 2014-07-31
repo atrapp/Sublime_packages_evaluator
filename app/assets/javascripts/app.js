@@ -204,20 +204,25 @@ PackageView.prototype.render = function(){
       if (window.currentUser && window.currentUser.id == ele.user_id) { 
         deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
         deleteButton.on('click', function(e){
+          var $reviewEl = $(e.target.parentElement);
+          var event = e;
           e.preventDefault();
           console.log("Delete this review: " + ele.title + " (id:" + ele.id + ")");
           console.log("Index: " + idx + " in " + that.model.reviews);
-
+          var $this = this;
+          debugger;
           $.ajax({   
             url: '/reviews/'+ele.id,
             type: 'DELETE',
             dataType: 'json',
-            success: function (data) {      
+            success: function(data) {      
+                debugger;
+                $reviewEl.hide();
                 console.log('Delete successful');
                 console.log(data);
                 // delete data here????                
                 },
-            error: function (xhr, textStatus, errorThrown) {
+            error: function(xhr, textStatus, errorThrown) {
                 console.log('Error in Operation');
                 }    
           });   
@@ -301,10 +306,15 @@ function PackageCollection(){
 
 // ************ Add Package to Collection *************
 PackageCollection.prototype.add = function(packageJSON){
-  var that = this;
   var newPackage = new Package(packageJSON);
   this.models[packageJSON.name] = newPackage;
   $(this).trigger('addFlare');
+  return this;
+}
+
+// ************ Remove all Packages from Collection *************
+PackageCollection.prototype.removeAll = function(){
+  $(this).trigger('noFlares');
   return this;
 }
 
@@ -314,10 +324,13 @@ PackageCollection.prototype.fetch = function(packageName){
   $.ajax({
     url: '/search?package_name='+packageName,
     dataType: 'json',
-    success: function(data){      
+    success: function(data){
+      if (data == '') {
+        that.removeAll();             
+      };  
       for (idx in data){         
         that.add(data[idx]);
-      }
+      }      
     }
   })
 };
@@ -382,6 +395,41 @@ function clearAndDisplayPackageList(searchPackageName){
     // ********************************************
 }
 
+function clearPackageList(searchPackageName){
+
+  var packagesTotal = 0; 
+  packageCollection.models = {};
+  
+  $('.packages').html('No packages found.');
+  $('.packages-total').html('<p>'+packagesTotal+' results for "' + searchPackageName + '"</p>'); 
+  
+    // ************   D3 Visualization ************
+    packages = new Array;
+    Object.keys(packageCollection.models).forEach(function (key) {         
+        packages.push(packageCollection.models[key]);       
+      });   
+
+    // removeSvg();    
+    // buildSvg();
+    // bubbleChart();
+    // // bubbleChartRadius();
+    // barChart();
+
+    //removeSvgBubbleChart(); 
+    // buildSvgBubbleChart();
+   bubbleChart2();
+
+    // removeSvgBubbleChartRadius();
+    // buildSvgBubbleChartRadius();
+    // bubbleChartRadius2();
+
+    //removeSvgBarChart();
+    // buildSvgBarChart();
+    barChart2();
+    // ********************************************
+}
+
+
 var packageCollection = new PackageCollection(); 
  
 
@@ -398,6 +446,7 @@ $(function(){
   // reviewsList.hide();
 
   var searchPackageName;
+
   $('.package-search-form').on('submit', function(e){
     e.preventDefault();
     packageCollection.models = {}
@@ -408,6 +457,17 @@ $(function(){
   
   $(packageCollection).on('addFlare', function(){
     clearAndDisplayPackageList(searchPackageName);
+      //   removeSvg();
+      // buildSvg();  
+      //   bubbleChart();
+
+    // removeSvgBubbleChart(); 
+    // buildSvgBubbleChart();
+    // bubbleChart2();
+  })
+
+  $(packageCollection).on('noFlares', function(){
+    clearPackageList(searchPackageName);
       //   removeSvg();
       // buildSvg();  
       //   bubbleChart();
