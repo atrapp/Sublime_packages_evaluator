@@ -6,7 +6,7 @@ window.SublimePackagesEvaluator = {
 };
 
 SublimePackagesEvaluator.initialize = function(){
- 
+  debugger;
   //************************
   // ******   USER    ******
   //************************
