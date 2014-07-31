@@ -16,7 +16,8 @@ class Review < ActiveRecord::Base
       description: self.description,
       platform: self.platform,
       rating: self.rating,
-      datetime: self.datetime
+      datetime: self.datetime,
+      id: self.id
     }
   end
 end

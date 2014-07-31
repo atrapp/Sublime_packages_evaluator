@@ -160,6 +160,7 @@ PackageView.prototype.render = function(){
   var reviewsTotal = $('<h4>').html(reviewsTitleText);
   newPackage.append(reviewsTotal);
 
+  // ***** Package Rating *****
   if (reviewsCount > 0) { 
   
     var packageRating = 0
@@ -172,8 +173,8 @@ PackageView.prototype.render = function(){
 
     var stars = 5;
     for (i=0;i< packageRatingAvgR;i++) {
-      // newPackage.append('<i class="fa fa-star fa-2x"></i>');
-      newPackage.append('<i class="fa fa-star"></i>');
+      newPackage.append('<i class="fa fa-star fa-2x"></i>');
+      // newPackage.append('<i class="fa fa-star"></i>');
       stars--;
     };
 
@@ -191,22 +192,49 @@ PackageView.prototype.render = function(){
     var packageRatingTotal = $('<h4>').html(packageRatingText);
     //var packageRatingTotal = $('<span>').html(packageRatingText);
     newPackage.append(packageRatingTotal);
+    //***** end Package Rating *****
 
 
+    
     $.each(this.model.reviews, function(idx, ele){
 
-        deleteButton = '';
+      // *****   delete review   ****** 
+      deleteButton = '';       
+ 
+      if (window.currentUser && window.currentUser.id == ele.user_id) { 
+        deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
+        deleteButton.on('click', function(e){
+          e.preventDefault();
+          console.log("Delete this review: " + ele.title + " (id:" + ele.id + ")");
+          console.log("Index: " + idx + " in " + that.model.reviews);
 
-      // will be added later
-      // if (window.currentUser && window.currentUser.id == ele.user_id) { 
-      //   deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
-      //   deleteButton.on('click', function(e){
-      //     e.preventDefault();
-      //     console.log("Delete this review: " + ele.title + "(" + ele.id + ")");
-      //     console.log("Index: " + idx + " in " + that.model.reviews);
-      //     that.model.reviews.splice(idx, 1);
-      //   })  
-      //  }
+          $.ajax({   
+            url: '/reviews/'+ele.id,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function (data) {      
+                console.log('Delete successful');
+                console.log(data);
+                // delete data here????                
+                },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                }    
+          });   
+
+          
+
+          // table record successfully deleted... now remove from collection / page
+          // debugger;
+          // that.model.reviews.splice(idx, 1);    
+          
+
+          // Review is being successfully deleted from the reviews collection
+          // console: that.model.reviews
+
+        })  // end deleteButton.on('click'...)
+       } // end if 
+
 
       // *****   create the reviews list   ****** 
       var reviewsItem = $('<li>');
@@ -216,7 +244,7 @@ PackageView.prototype.render = function(){
       } else {
         reviewAuthor = ele.email;
       };   
-debugger;
+
       reviewsItem.html('<p>' + reviewAuthor + '   (Rating: ' + ele.rating + ')</p>' +
                        '<p> wrote on <span>' + ele.datetime + '</span></p>' +
                        '<h4>' + ele.title + '</h4>' +                     
@@ -241,6 +269,7 @@ debugger;
 
   }; // if (reviewsCount > 0)
 
+
   // *****   write review   ****** 
   if (window.currentUser){
     var writeReviewButton = $('<button>Write a Review</button>').addClass('package-button');
@@ -257,6 +286,7 @@ debugger;
     newPackage.append(writeReviewButton);
   }  
   
+
   // *****   return this package   *****
   newPackage.append(reviewsList);
 

@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'oauths/oauth'
-
-  get 'oauths/callback'
-
   root 'welcome#index'
 
   get '/login' => 'sessions#new', as: 'login'
@@ -22,9 +18,10 @@ Rails.application.routes.draw do
 
   resources :reviews, except: [:new, :edit]
 
-  post "oauth/callback" => "oauths#callback"
-  get "oauth/callback" => "oauths#callback" # for use with Github
-  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
+  # get 'oauths/oauth'
+  post 'oauth/callback' => 'oauths#callback'
+  get 'oauth/callback' => 'oauths#callback' # for use with Github
+  get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider
     
 end
 
