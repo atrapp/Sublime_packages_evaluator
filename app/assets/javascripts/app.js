@@ -7,9 +7,9 @@ window.SublimePackagesEvaluator = {
 
 SublimePackagesEvaluator.initialize = function(){
  
-  // //************************
-  // // ******   USER    ******
-  // //************************
+  //************************
+  // ******   USER    ******
+  //************************
   // var userCollection = new SublimePackagesEvaluator.Collections.Users();
 
   // var userListView = new SublimePackagesEvaluator.Views.UserListView({
