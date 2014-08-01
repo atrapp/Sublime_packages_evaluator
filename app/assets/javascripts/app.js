@@ -157,7 +157,8 @@ PackageView.prototype.render = function(){
   var reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-  var reviewsTotal = $('<h4>').addClass(this.model.name + "_reviewsTotal").html(reviewsTitleText);
+  // ===> var reviewsTotal = $('<h4>').addClass(this.model.name + "_reviewsTotal").html(reviewsTitleText);
+  var reviewsTotal = $('<h4>').addClass(this.model.name.replace(/\s+/g, '-') + "_reviewsTotal").html(reviewsTitleText);
 
   newPackage.append(reviewsTotal);
 
@@ -217,7 +218,7 @@ PackageView.prototype.render = function(){
       for (i=0;i< packageRatingAvgR;i++) {
       
         var $star = $('<i>').addClass("fa fa-star fa-2x");
-        $star.addClass($package.model.name + "_star");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");
         newPackage.append($star);  
       
         stars--;
@@ -225,7 +226,7 @@ PackageView.prototype.render = function(){
 
       if ( (packageRating%reviewsCount) != 0 ) {
         var $star = $('<i>').addClass("fa fa-star-half-o");
-        $star.addClass($package.model.name + "_star");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");
        
         newPackage.append($star);  
      
@@ -234,7 +235,7 @@ PackageView.prototype.render = function(){
 
       while (stars > 0) {
         var $star = $('<i>').addClass("fa fa-star-o");
-        $star.addClass($package.model.name + "_star");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");
      
         newPackage.append($star);  
        
@@ -242,7 +243,7 @@ PackageView.prototype.render = function(){
       }
     
       var packageRatingText = packageRatingAvg.toString();   
-      var packageRatingTotal = $('<h4>').attr('id', $package.model.name + "_packageRatingTotal").html(packageRatingText);
+      var packageRatingTotal = $('<h4>').attr('id', $package.model.name.replace(/\s+/g, '-') + "_packageRatingTotal").html(packageRatingText);
       newPackage.append(packageRatingTotal); 
 
     // }
@@ -250,7 +251,7 @@ PackageView.prototype.render = function(){
     //***** END Package Rating *****
 
       // $.each(this.model.reviews, function(idx, ele){
-    $.each($package.model.reviews, function(i, ele){
+    $.each($package.model.reviews, function(idx, ele){
 
       // *****   delete review   ****** 
       deleteButton = '';       
@@ -279,13 +280,13 @@ var indexOfDeletedReview = $package.model.reviews.map(function(el) {
 debugger;
   var reviewsCount = $package.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
-  var $reviewsTotal = $('.' + $package.model.name + '_reviewsTotal');     
+  var $reviewsTotal = $('.' + $package.model.name.replace(/\s+/g, '-') + '_reviewsTotal');     
   $reviewsTotal.html(reviewsTitleText); 
 
-  var $stars = $('.' + $package.model.name + '_star');
+  var $stars = $('.' + $package.model.name.replace(/\s+/g, '-') + '_star');
   $stars.remove();    
 
-  var packageRatingTotal = $('#' + $package.model.name + '_packageRatingTotal'); 
+  var packageRatingTotal = $('#' + $package.model.name.replace(/\s+/g, '-') + '_packageRatingTotal'); 
   packageRatingTotal.html(0);  
 
 
@@ -298,7 +299,7 @@ debugger;
  
       //$.each(this.model.reviews, function(idx, ele){
         
-      $.each($package.model.reviews, function(index, ele){
+      $.each($package.model.reviews, function(idx, ele){
         packageRating = packageRating + parseInt(ele.rating);    
       });
 
