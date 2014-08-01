@@ -101,7 +101,7 @@ SublimePackagesEvaluator.initialize = function(){
     reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
     $('form.review-form').hide()
-    //debugger;
+    
     packageCollection.fetch(newPackageName);
   });
 
@@ -137,6 +137,8 @@ function PackageView(model){
 
 PackageView.prototype.render = function(){
   var that = this;
+  var $package = this;
+debugger;
   var newPackage = $('<tr>').append("<td colspan='2'>");
   newPackageTitle = $('<a>').attr("href","https://sublime.wbond.net/packages/" + this.model.name).attr('target','_blank').html(this.model.name).addClass('package-title');
 
@@ -157,43 +159,102 @@ PackageView.prototype.render = function(){
 
   // var reviewsTotal = $('<h3>').html(reviewsTitleText);
   // reviewsList.append(reviewsTotal);
-  var reviewsTotal = $('<h4>').html(reviewsTitleText);
+  var reviewsTotal = $('<h4>').addClass($package.model.name + "_reviewsTotal").html(reviewsTitleText);
+
+
+
+
   newPackage.append(reviewsTotal);
 
-  // ***** Package Rating *****
+  
   if (reviewsCount > 0) { 
   
-    var packageRating = 0
-    $.each(this.model.reviews, function(idx, ele){
-      packageRating = packageRating + parseInt(ele.rating);    
-    });
+    // // ***** Package Rating *****
+    // var packageRating = 0
+    // $.each(this.model.reviews, function(idx, ele){
+    //   packageRating = packageRating + parseInt(ele.rating);    
+    // });
 
-    var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
-    var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+    // var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+    // var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
 
-    var stars = 5;
-    for (i=0;i< packageRatingAvgR;i++) {
-      newPackage.append('<i class="fa fa-star fa-2x"></i>');
-      // newPackage.append('<i class="fa fa-star"></i>');
-      stars--;
-    };
+    // var stars = 5;
+    // for (i=0;i< packageRatingAvgR;i++) {
+    //   newPackage.append('<i class="fa fa-star fa-2x"></i>');    
+    //   stars--;
+    // };
 
-    if ( (packageRating%reviewsCount) != 0 ) {
-      newPackage.append('<i class="fa fa-star-half-o"></i>');
-      stars--;
-    };
+    // if ( (packageRating%reviewsCount) != 0 ) {
+    //   newPackage.append('<i class="fa fa-star-half-o"></i>');
+    //   stars--;
+    // };
 
-    while (stars > 0) {
-      newPackage.append('<i class="fa fa-star-o"></i>');
-      stars--;
+    // while (stars > 0) {
+    //   newPackage.append('<i class="fa fa-star-o"></i>');
+    //   stars--;
+    // }
+
+    // var packageRatingText = packageRatingAvg.toString();
+    // var packageRatingTotal = $('<h4>').html(packageRatingText);
+    // //var packageRatingTotal = $('<span>').html(packageRatingText);
+    // newPackage.append(packageRatingTotal);    
+    // //***** END Package Rating *****
+
+    // ***** Package Rating *****
+ 
+
+    function packageRating() {
+      console.log("inside bla bla bla packageRating()");
+      var packageRating = 0;
+      // debugger;
+      //$.each(this.model.reviews, function(idx, ele){
+      $.each($package.model.reviews, function(idx, ele){
+        packageRating = packageRating + parseInt(ele.rating);    
+      });
+
+      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+      var stars = 5;
+      // debugger;
+      for (i=0;i< packageRatingAvgR;i++) {
+        // var $star = $('<i class="fa fa-star fa-2x"></i>').addClass($package.model.name + "_star");
+        var $star = $('<i>').addClass("fa fa-star fa-2x");
+        $star.addClass($package.model.name + "_star");
+        newPackage.append($star);  
+        // newPackage.append('<i class="fa fa-star fa-2x"></i>');    
+        stars--;
+      };
+
+      if ( (packageRating%reviewsCount) != 0 ) {
+        var $star = $('<i>').addClass("fa fa-star-half-o");
+        $star.addClass($package.model.name + "_star");
+        // var $star = $('<i class="fa fa-star-half-o"></i>').addClass($package.model.name + "_star");
+        newPackage.append($star);  
+        // newPackage.append('<i class="fa fa-star-half-o"></i>');
+        stars--;
+      };
+
+      while (stars > 0) {
+        var $star = $('<i>').addClass("fa fa-star-o");
+        $star.addClass($package.model.name + "_star");
+        // var $star = $('<i class="fa fa-star-o"></i>').addClass($package.model.name + "_star");
+        newPackage.append($star);  
+        // newPackage.append('<i class="fa fa-star-o"></i>');
+        stars--;
+      }
+      // debugger;
+      var packageRatingText = packageRatingAvg.toString();
+      // var newID = $package.model.name + "_packageRatingTotal";
+      // var packageRatingTotal = $('<h4>').html(packageRatingText);
+      var packageRatingTotal = $('<h4>').attr('id', $package.model.name + "_packageRatingTotal").html(packageRatingText);
+
+
+      //var packageRatingTotal = $('<span>').html(packageRatingText);
+      newPackage.append(packageRatingTotal); 
     }
 
-    var packageRatingText = packageRatingAvg.toString();
-    var packageRatingTotal = $('<h4>').html(packageRatingText);
-    //var packageRatingTotal = $('<span>').html(packageRatingText);
-    newPackage.append(packageRatingTotal);
-    //***** end Package Rating *****
-
+    //***** END Package Rating *****
 
     
     $.each(this.model.reviews, function(idx, ele){
@@ -203,42 +264,95 @@ PackageView.prototype.render = function(){
  
       if (window.currentUser && window.currentUser.id == ele.user_id) { 
         deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
+        
         deleteButton.on('click', function(e){
-          var $reviewEl = $(e.target.parentElement);
-          var event = e;
+          var $reviewEl = $(e.target.parentElement);         
           e.preventDefault();
-          console.log("Delete this review: " + ele.title + " (id:" + ele.id + ")");
-          console.log("Index: " + idx + " in " + that.model.reviews);
-          var $this = this;
-          debugger;
+         
           $.ajax({   
             url: '/reviews/'+ele.id,
             type: 'DELETE',
             dataType: 'json',
-            success: function(data) {      
-                debugger;
-                $reviewEl.hide();
-                console.log('Delete successful');
-                console.log(data);
-                // delete data here????                
+            success: function(data) {              
+                $reviewEl.hide();               
+                $package.model.reviews.splice(idx, 1);    
+               
+ 
+  var reviewsCount = $package.model.reviews.length;  
+  var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
+  var $reviewsTotal = $('.' + $package.model.name + '_reviewsTotal');     
+  $reviewsTotal.html(reviewsTitleText);  
+
+  var $stars = $('.' + $package.model.name + '_star');
+  $stars.remove();    
+
+  var packageRatingTotal = $('#' + $package.model.name + '_packageRatingTotal'); 
+  packageRatingTotal.html(0);  
+
+  if (reviewsCount > 0) {
+    
+      var packageRating = 0
+  
+
+
+      //$.each(this.model.reviews, function(idx, ele){
+        
+      $.each($package.model.reviews, function(idx, ele){
+        packageRating = packageRating + parseInt(ele.rating);    
+      });
+
+      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+      var stars = 5;
+      for (i=0;i< packageRatingAvgR;i++) {
+        $reviewsTotal.append('<i class="fa fa-star fa-2x"></i>');    
+        stars--;
+      };
+
+      if ( (packageRating%reviewsCount) != 0 ) {
+        $reviewsTotal.append('<i class="fa fa-star-half-o"></i>');
+        stars--;
+      };
+
+      while (stars > 0) {
+        $reviewsTotal.append('<i class="fa fa-star-o"></i>');
+        stars--;
+      }
+
+      var packageRatingText = packageRatingAvg.toString();
+      
+
+      // var packageRatingTotal = $('<h4>').html(packageRatingText);
+      // //var packageRatingTotal = $('<span>').html(packageRatingText);
+      // newPackage.append(packageRatingTotal); 
+      // var packname = '#' + $package.model.name + '_packageRatingTotal';
+      // var packageRatingTotal = $('#' + $package.model.name + '_packageRatingTotal');     
+      packageRatingTotal.html(packageRatingText);   
+
+
+    }
+    //  else {
+    //   $reviewsTotal.append($('<h4>').html("0000"));
+
+    // }
+
+
+
+
+
+
+
+
                 },
             error: function(xhr, textStatus, errorThrown) {
-                console.log('Error in Operation');
+                console.log("Error in Operation 'Delete Review'");
                 }    
-          });   
+          })
+        })
 
-          
-
-          // table record successfully deleted... now remove from collection / page
-          // debugger;
-          // that.model.reviews.splice(idx, 1);    
-          
-
-          // Review is being successfully deleted from the reviews collection
-          // console: that.model.reviews
-
-        })  // end deleteButton.on('click'...)
-       } // end if 
+      } 
+      // *****   END delete review   ****** 
 
 
       // *****   create the reviews list   ****** 
@@ -271,6 +385,7 @@ PackageView.prototype.render = function(){
     });
   
     newPackage.append(showHideReviewsButton); 
+    packageRating();
 
   }; // if (reviewsCount > 0)
 
@@ -290,20 +405,7 @@ PackageView.prototype.render = function(){
 
     newPackage.append(writeReviewButton);
 
-      //       var that = this;
-      //   $.ajax({
-      //     url: '/search?package_name='+packageName,
-      //     dataType: 'json',
-      //     success: function(data){
-      //       if (data == '') {
-      //         that.removeAll();             
-      //       };  
-      //       for (idx in data){         
-      //         that.add(data[idx]);
-      //       }      
-      //     }
-      //   })
-      // };
+    
   }  
   
 

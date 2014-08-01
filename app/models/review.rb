@@ -4,6 +4,7 @@ class Review < ActiveRecord::Base
   validates_presence_of :package_name, on: :create 
   validates_presence_of :datetime, on: :create 
   validates_presence_of :title, on: :create
+  validates_presence_of :rating, on: :create
   
   belongs_to  :user
   belongs_to  :package
