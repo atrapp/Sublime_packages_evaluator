@@ -138,7 +138,7 @@ function PackageView(model){
 PackageView.prototype.render = function(){
   var that = this;
   var $package = this;
-debugger;
+
   var newPackage = $('<tr>').append("<td colspan='2'>");
   newPackageTitle = $('<a>').attr("href","https://sublime.wbond.net/packages/" + this.model.name).attr('target','_blank').html(this.model.name).addClass('package-title');
 
@@ -154,15 +154,10 @@ debugger;
   // *****   Package reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
 
-  reviewsCount = this.model.reviews.length;  
+  var reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
 
-  // var reviewsTotal = $('<h3>').html(reviewsTitleText);
-  // reviewsList.append(reviewsTotal);
-  var reviewsTotal = $('<h4>').addClass($package.model.name + "_reviewsTotal").html(reviewsTitleText);
-
-
-
+  var reviewsTotal = $('<h4>').addClass(this.model.name + "_reviewsTotal").html(reviewsTitleText);
 
   newPackage.append(reviewsTotal);
 
@@ -200,13 +195,15 @@ debugger;
     // newPackage.append(packageRatingTotal);    
     // //***** END Package Rating *****
 
+
+
     // ***** Package Rating *****
  
 
-    function packageRating() {
-      console.log("inside bla bla bla packageRating()");
+    // function packageRating() {
+     
       var packageRating = 0;
-      // debugger;
+     
       //$.each(this.model.reviews, function(idx, ele){
       $.each($package.model.reviews, function(idx, ele){
         packageRating = packageRating + parseInt(ele.rating);    
@@ -216,48 +213,44 @@ debugger;
       var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
 
       var stars = 5;
-      // debugger;
+      
       for (i=0;i< packageRatingAvgR;i++) {
-        // var $star = $('<i class="fa fa-star fa-2x"></i>').addClass($package.model.name + "_star");
+      
         var $star = $('<i>').addClass("fa fa-star fa-2x");
         $star.addClass($package.model.name + "_star");
         newPackage.append($star);  
-        // newPackage.append('<i class="fa fa-star fa-2x"></i>');    
+      
         stars--;
       };
 
       if ( (packageRating%reviewsCount) != 0 ) {
         var $star = $('<i>').addClass("fa fa-star-half-o");
         $star.addClass($package.model.name + "_star");
-        // var $star = $('<i class="fa fa-star-half-o"></i>').addClass($package.model.name + "_star");
+       
         newPackage.append($star);  
-        // newPackage.append('<i class="fa fa-star-half-o"></i>');
+     
         stars--;
       };
 
       while (stars > 0) {
         var $star = $('<i>').addClass("fa fa-star-o");
         $star.addClass($package.model.name + "_star");
-        // var $star = $('<i class="fa fa-star-o"></i>').addClass($package.model.name + "_star");
+     
         newPackage.append($star);  
-        // newPackage.append('<i class="fa fa-star-o"></i>');
+       
         stars--;
       }
-      // debugger;
-      var packageRatingText = packageRatingAvg.toString();
-      // var newID = $package.model.name + "_packageRatingTotal";
-      // var packageRatingTotal = $('<h4>').html(packageRatingText);
+    
+      var packageRatingText = packageRatingAvg.toString();   
       var packageRatingTotal = $('<h4>').attr('id', $package.model.name + "_packageRatingTotal").html(packageRatingText);
-
-
-      //var packageRatingTotal = $('<span>').html(packageRatingText);
       newPackage.append(packageRatingTotal); 
-    }
+
+    // }
 
     //***** END Package Rating *****
 
-    
-    $.each(this.model.reviews, function(idx, ele){
+      // $.each(this.model.reviews, function(idx, ele){
+    $.each($package.model.reviews, function(i, ele){
 
       // *****   delete review   ****** 
       deleteButton = '';       
@@ -274,14 +267,20 @@ debugger;
             type: 'DELETE',
             dataType: 'json',
             success: function(data) {              
-                $reviewEl.hide();               
-                $package.model.reviews.splice(idx, 1);    
+                $reviewEl.hide();
+
+
+var indexOfDeletedReview = $package.model.reviews.map(function(el) {
+  return el.id;
+}).indexOf(data.id);
+                // var indexOfDeletedReview = $package.model.reviews.indexOf(data.id);               
+                $package.model.reviews.splice(indexOfDeletedReview, 1);    
                
- 
+debugger;
   var reviewsCount = $package.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
   var $reviewsTotal = $('.' + $package.model.name + '_reviewsTotal');     
-  $reviewsTotal.html(reviewsTitleText);  
+  $reviewsTotal.html(reviewsTitleText); 
 
   var $stars = $('.' + $package.model.name + '_star');
   $stars.remove();    
@@ -289,21 +288,23 @@ debugger;
   var packageRatingTotal = $('#' + $package.model.name + '_packageRatingTotal'); 
   packageRatingTotal.html(0);  
 
+
+  var testbla = $package.model.reviews;
+debugger;
+
   if (reviewsCount > 0) {
     
       var packageRating = 0
-  
-
-
+ 
       //$.each(this.model.reviews, function(idx, ele){
         
-      $.each($package.model.reviews, function(idx, ele){
+      $.each($package.model.reviews, function(index, ele){
         packageRating = packageRating + parseInt(ele.rating);    
       });
 
       var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
       var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
-
+debugger;
       var stars = 5;
       for (i=0;i< packageRatingAvgR;i++) {
         $reviewsTotal.append('<i class="fa fa-star fa-2x"></i>');    
@@ -320,18 +321,9 @@ debugger;
         stars--;
       }
 
-      var packageRatingText = packageRatingAvg.toString();
-      
-
-      // var packageRatingTotal = $('<h4>').html(packageRatingText);
-      // //var packageRatingTotal = $('<span>').html(packageRatingText);
-      // newPackage.append(packageRatingTotal); 
-      // var packname = '#' + $package.model.name + '_packageRatingTotal';
-      // var packageRatingTotal = $('#' + $package.model.name + '_packageRatingTotal');     
-      packageRatingTotal.html(packageRatingText);   
-
-
-    }
+      var packageRatingText = packageRatingAvg.toString();      
+      packageRatingTotal.html(packageRatingText); 
+    };
     //  else {
     //   $reviewsTotal.append($('<h4>').html("0000"));
 
@@ -385,7 +377,7 @@ debugger;
     });
   
     newPackage.append(showHideReviewsButton); 
-    packageRating();
+    // packageRating();
 
   }; // if (reviewsCount > 0)
 
