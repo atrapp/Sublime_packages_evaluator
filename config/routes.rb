@@ -11,14 +11,12 @@ Rails.application.routes.draw do
   
   get '/profile' => 'users#profile', as: 'profile'
 
-
   resources :packages, except: [:new, :edit]
   get '/search' => 'packages#search'
   get '/gettop25' => 'packages#gettop25'
 
   resources :reviews, except: [:new, :edit]
 
-  # get 'oauths/oauth'
   post 'oauth/callback' => 'oauths#callback'
   get 'oauth/callback' => 'oauths#callback' # for use with Github
   get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider

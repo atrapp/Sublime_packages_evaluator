@@ -1,4 +1,5 @@
 SublimePackagesEvaluator.initialize = function(){
+<<<<<<< HEAD
 
   //************************
   // ******   USER    ******
@@ -94,7 +95,7 @@ SublimePackagesEvaluator.initialize = function(){
     reviewCollection.create({package_name: newPackageName, title: newTitle, description: newDescription, platform: newPlatform, rating: newRating, datetime: newDateTime, user_id: userId});
 
     $('form.review-form').hide()
-
+    
     packageCollection.fetch(newPackageName);
   });
 
@@ -130,6 +131,8 @@ function PackageView(model){
 
 PackageView.prototype.render = function(){
   var that = this;
+  var $package = this;
+
   var newPackage = $('<tr>').append("<td colspan='2'>");
   newPackageTitle = $('<a>').attr("href","https://sublime.wbond.net/packages/" + this.model.name).attr('target','_blank').html(this.model.name).addClass('package-title');
 
@@ -145,93 +148,156 @@ PackageView.prototype.render = function(){
   // *****   Package reviews   ******
   var reviewsList = $('<ul>').addClass('reviews');
 
-  reviewsCount = this.model.reviews.length;  
+  var reviewsCount = this.model.reviews.length;  
   var reviewsTitleText = reviewsCount + ' Reviews for ' + this.model.name;
+  var $reviewsTotal = $('<h4>').addClass(this.model.name.replace(/\s+/g, '-') + "_reviewsTotal").html(reviewsTitleText);
+  var $starDiv = $('<div>').addClass(this.model.name.replace(/\s+/g, '-') + "_stars");
 
-  // var reviewsTotal = $('<h3>').html(reviewsTitleText);
-  // reviewsList.append(reviewsTotal);
-  var reviewsTotal = $('<h4>').html(reviewsTitleText);
-  newPackage.append(reviewsTotal);
+  $reviewsTotal.append($starDiv);
+  newPackage.append($reviewsTotal);
 
-  // ***** Package Rating *****
-  if (reviewsCount > 0) { 
   
-    var packageRating = 0
-    $.each(this.model.reviews, function(idx, ele){
-      packageRating = packageRating + parseInt(ele.rating);    
-    });
-
-    var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
-    var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
-
-    var stars = 5;
-    for (i=0;i< packageRatingAvgR;i++) {
-      newPackage.append('<i class="fa fa-star fa-2x"></i>');
-      // newPackage.append('<i class="fa fa-star"></i>');
-      stars--;
-    };
-
-    if ( (packageRating%reviewsCount) != 0 ) {
-      newPackage.append('<i class="fa fa-star-half-o"></i>');
-      stars--;
-    };
-
-    while (stars > 0) {
-      newPackage.append('<i class="fa fa-star-o"></i>');
-      stars--;
-    }
-
-    var packageRatingText = packageRatingAvg.toString();
-    var packageRatingTotal = $('<h4>').html(packageRatingText);
-    //var packageRatingTotal = $('<span>').html(packageRatingText);
-    newPackage.append(packageRatingTotal);
-    //***** end Package Rating *****
+  if (reviewsCount > 0) { 
 
 
+    // ***** Package Rating *****
+ 
+
+    // function packageRating() {
+     
+      var packageRating = 0;
+     
+      //$.each(this.model.reviews, function(idx, ele){
+      $.each($package.model.reviews, function(idx, ele){
+        packageRating = packageRating + parseInt(ele.rating);    
+      });
+
+      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+      var stars = 5;
+      
+      for (i=0;i< packageRatingAvgR;i++) {      
+        var $star = $('<i>').addClass("fa fa-star fa-2x");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");        
+        $starDiv.append($star);  
+        stars--;
+      };
+
+      if ( (packageRating%reviewsCount) != 0 ) {
+        var $star = $('<i>').addClass("fa fa-star-half-o");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");       
+        $starDiv.append($star);  
+        stars--;
+      };
+
+      while (stars > 0) {
+        var $star = $('<i>').addClass("fa fa-star-o");
+        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");      
+        $starDiv.append($star);       
+        stars--;
+      }
     
-    $.each(this.model.reviews, function(idx, ele){
+      // don't display right now:
+      // var packageRatingText = packageRatingAvg.toString();   
+      // var packageRatingTotal = $('<h4>').attr('id', $package.model.name.replace(/\s+/g, '-') + "_packageRatingTotal").html(packageRatingText);
+      // newPackage.append(packageRatingTotal); 
+
+    // }
+
+    //***** END Package Rating *****
+
+    // $.each(this.model.reviews, function(idx, ele){
+    $.each($package.model.reviews, function(idx, ele){
 
       // *****   delete review   ****** 
       deleteButton = '';       
  
       if (window.currentUser && window.currentUser.id == ele.user_id) { 
         deleteButton = $('<button>').attr('data-action', 'release').html("Delete Review");
+        
         deleteButton.on('click', function(e){
-          var $reviewEl = $(e.target.parentElement);
-          var event = e;
+          var $reviewEl = $(e.target.parentElement);         
           e.preventDefault();
-          console.log("Delete this review: " + ele.title + " (id:" + ele.id + ")");
-          console.log("Index: " + idx + " in " + that.model.reviews);
-          var $this = this;
-    
+
+         
+
           $.ajax({   
             url: '/reviews/'+ele.id,
             type: 'DELETE',
             dataType: 'json',
-            success: function(data) {      
-           
+
+            success: function(data) {              
+
                 $reviewEl.hide();
-                console.log('Delete successful');
-                console.log(data);
-                // delete data here????                
+
+
+  // get the index of the just deleted review !!
+  var indexOfDeletedReview = $package.model.reviews.map(function(el) {
+    return el.id;
+  }).indexOf(data.id);                              
+  $package.model.reviews.splice(indexOfDeletedReview, 1);    
+               
+
+  var reviewsCount = $package.model.reviews.length;  
+  var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
+  var $reviewsTotal = $('.' + $package.model.name.replace(/\s+/g, '-') + '_reviewsTotal');   
+
+  var $starDiv = $('div.' + $package.model.name.replace(/\s+/g, '-') + "_stars");
+  $starDiv.remove();
+  var $starDiv = $('<div>').addClass($package.model.name.replace(/\s+/g, '-') + "_stars");
+
+  $reviewsTotal.html(reviewsTitleText);
+
+  var packageRatingTotal = $('#' + $package.model.name.replace(/\s+/g, '-') + '_packageRatingTotal'); 
+  packageRatingTotal.html(0);  
+
+
+  if (reviewsCount > 0) {
+    
+      var packageRating = 0
+ 
+      //$.each(this.model.reviews, function(idx, ele){
+        
+      $.each($package.model.reviews, function(idx, ele){
+        packageRating = packageRating + parseInt(ele.rating);    
+      });
+
+      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+      var stars = 5;
+      for (i=0;i< packageRatingAvgR;i++) {       
+        $starDiv.append('<i class="fa fa-star fa-2x"></i>');     
+        stars--;
+      };
+
+      if ( (packageRating%reviewsCount) != 0 ) {      
+        $starDiv.append('<i class="fa fa-star-half-o"></i>');   
+        stars--;
+      };
+
+      while (stars > 0) {        
+        $starDiv.append('<i class="fa fa-star-o"></i>');
+        stars--;
+      }
+      // don't display right now
+      // var packageRatingText = packageRatingAvg.toString();      
+      // packageRatingTotal.html(packageRatingText); 
+
+      $reviewsTotal.append($starDiv);
+    }
+
+
                 },
             error: function(xhr, textStatus, errorThrown) {
-                console.log('Error in Operation');
+                console.log("Error in Operation 'Delete Review'");
                 }    
-          });   
+          })
+        })
 
-          
-
-          // table record successfully deleted... now remove from collection / page
-          // debugger;
-          // that.model.reviews.splice(idx, 1);    
-          
-
-          // Review is being successfully deleted from the reviews collection
-          // console: that.model.reviews
-
-        })  // end deleteButton.on('click'...)
-       } // end if 
+      } 
+      // *****   END delete review   ****** 
 
 
       // *****   create the reviews list   ****** 
@@ -264,6 +330,7 @@ PackageView.prototype.render = function(){
     });
   
     newPackage.append(showHideReviewsButton); 
+    // packageRating();
 
   }; // if (reviewsCount > 0)
 
@@ -282,6 +349,8 @@ PackageView.prototype.render = function(){
     });
 
     newPackage.append(writeReviewButton);
+
+    
   }  
   
 
