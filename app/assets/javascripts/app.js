@@ -10,6 +10,7 @@ SublimePackagesEvaluator.initialize = function(){
   // //************************
   // // ******   USER    ******
   // //************************
+
   // var userCollection = new SublimePackagesEvaluator.Collections.Users();
 
   // var userListView = new SublimePackagesEvaluator.Views.UserListView({
