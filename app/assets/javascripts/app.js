@@ -1,5 +1,5 @@
 SublimePackagesEvaluator.initialize = function(){
-<<<<<<< HEAD
+
 
   //************************
   // ******   USER    ******
