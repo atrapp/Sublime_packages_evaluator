@@ -103,21 +103,33 @@ Rails.application.config.sorcery.configure do |config|
   #
   # Twitter wil not accept any requests nor redirect uri containing localhost,
   # make sure you use 0.0.0.0:3000 to access your app in development
-  #
+  
+
+  # config.twitter.key = "e9a2e9rmM81qFTgqslsphMun8"
+  # config.twitter.secret = "hmLRYnlwqjn0Q32gnPdfEloUtpj5N5PxJgTyP4YarPlqTahhHQ"
+  # config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
+  # config.twitter.user_info_mapping = {:email => "screen_name"}
 
   config.twitter.key = "4uczha9lKLnujjMnb5EbpFrS7"
   config.twitter.secret = "w6J4jySw1iudxqCCk2pzrEBf665sm2iVMuzA7HJ2iw7Dlx2e5S"
-  config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
+  config.twitter.callback_url = "http://sublime-packages-evaluator.herokuapp.com/oauth/callback?provider=twitter"
   config.twitter.user_info_mapping = {:email => "screen_name"}
   
-  config.facebook.key = "656583234425720"
-  config.facebook.secret = "a4354e725c19596354e64179dbf01be6"
-  config.facebook.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=facebook"  
+  # config.facebook.key = "656583234425720"
+  # config.facebook.secret = "a4354e725c19596354e64179dbf01be6"
+  # config.facebook.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=facebook"  
+  # config.facebook.display = "popup"
+  # config.facebook.user_info_mapping = {:email => "name"}
+  # config.facebook.access_permissions = ["email", "publish_stream"]
+
+  config.facebook.key = "1505646906338930"
+  config.facebook.secret = "e37ad97c1c949705a7955decc3ffe172"
+  config.facebook.callback_url = "http://sublime-packages-evaluator.herokuapp.com/oauth/callback?provider=facebook"  
   config.facebook.display = "popup"
   config.facebook.user_info_mapping = {:email => "name"}
   config.facebook.access_permissions = ["email", "publish_stream"]
 
-  #
+  
   # config.github.key = ""
   # config.github.secret = ""
   # config.github.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=github"

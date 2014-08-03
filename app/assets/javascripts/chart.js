@@ -41,6 +41,16 @@ function buildSvgBubbleChartRadius() {
   // svgBubbleChartRadius = d3.select('#d3bubblechartradius');
 }
 
+function buildSvgPieChart() {
+  
+  svgPieChart = d3.select('#d3piechart')
+      .append('svg')
+        .attr('width', width)
+        .attr('height', height);  
+  // svgBubbleChartRadius = d3.select('#d3bubblechartradius');
+}
+
+
 function buildSvgBarChart() {
   
   svgBarChart = d3.select('#d3barchart')
@@ -790,3 +800,75 @@ function barChart2() {
 }
 
 
+
+// ----------------------------------------------
+
+function pieChart() {
+
+
+  var div = d3.select("#d3piechart").append("div")
+      .attr("class", "tooltip")
+          .style("opacity", 0);
+
+// var div = d3.select("body").append("div")
+//     .style("position", "absolute")
+//     .style("text-align", "center")
+//     .style("width", "240px")
+//     .style("height", "2.5em")
+//     .style("font", "1.5em sans-serif")
+//     .style("color", "yellow")
+//     .style("pointer-events", "none")
+//     .style("background", "black")
+//     .style("border-radius", "8px")
+//     .style("border", "solid 1px green")
+//     .style("opacity", 0);
+
+
+
+  // var data = [ {amount: 10, color: "red"}, {amount: 20, color: "green"}, {amount: 5, color: "blue"}];
+  var data = packages;
+  var color = d3.scale.category20c();
+
+  var arc = d3.svg.arc()
+        .innerRadius(0)
+        .outerRadius(200);
+
+  var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.unique_installs; });
+
+
+
+
+  var chart = svgPieChart.append("g")
+        .attr("transform", "translate(250,250)");
+
+  var arcGs = chart.selectAll(".arc")
+        .data(pie(data))
+     .enter().append("g");
+
+ 
+
+  arcGs.append("path")
+        .attr("d", arc)
+        .style("fill", function(d, i) { return color(i); })
+        
+     .on("mouseover", function(d) {
+          div.transition()        
+              .duration(200)      
+              .style("opacity", .9);           
+          div.html( d.name + "<br />Rank: " + d.installs_rank + "<br />Installs: " + d.unique_installs)  
+              .style("left", (d3.event.pageX) + "px")     
+              .style("top", (d3.event.pageY - 28) + "px");    
+          })   
+
+      .on("mouseout", function(d) {       
+          div.transition()        
+              .duration(500)      
+              .style("opacity", 0);   
+          });
+
+
+
+
+}

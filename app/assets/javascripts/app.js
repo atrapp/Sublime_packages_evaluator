@@ -451,6 +451,8 @@ function clearAndDisplayPackageList(searchPackageName){
     // buildSvgBubbleChartRadius();
     // bubbleChartRadius2();
 
+        pieChart();
+
     // removeSvgBarChart();
     // buildSvgBarChart();
     barChart2();
@@ -484,6 +486,8 @@ function clearPackageList(searchPackageName){
     // removeSvgBubbleChartRadius();
     // buildSvgBubbleChartRadius();
     // bubbleChartRadius2();
+
+    pieChart();
 
     //removeSvgBarChart();
     // buildSvgBarChart();
@@ -582,7 +586,8 @@ $(function(){
 
   // buildSvg();
   buildSvgBubbleChart();
-  buildSvgBubbleChartRadius();
+  // buildSvgBubbleChartRadius();
+  buildSvgPieChart();
   buildSvgBarChart();
   
 })

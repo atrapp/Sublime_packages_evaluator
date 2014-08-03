@@ -236,6 +236,16 @@ ul li {
   border: 1px solid black;
 }
 
+#d3piechart {
+  clear: right;
+  float: right;
+  width: 500px;
+  height: 500px;
+  margin: 20px;
+  background: white;  
+  border: 1px solid black;
+}
+
 #d3barchart {
   clear: right;
   float: right;

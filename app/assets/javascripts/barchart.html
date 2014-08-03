@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+    function barChart() {
+
+    // Internal Variables for Closure
+    var svgHeight,
+        svgWidth;
+
+    // Creation of the Chart
+    function chart(selection) {
+
+      // Given a selection, go through each element and create a chart for it.
+      selection.each(function(d, i) {
+
+        // Bar X Spacing
+        var barXSpacing = svgWidth / d.length;
+
+        // Define Unit Bar Height
+        var barUnitHeight = Math.floor(svgHeight / d3.max(d));
+
+        // SVG Creation
+        var barChartSVG = d3.select(this).append("svg")
+            .attr( "width", svgWidth)
+            .attr("height", svgHeight);
+
+        // Bar Chart Bar Creation
+        barChartSVG.selectAll("rect")
+            .data(d)
+          .enter().append("rect")
+            .attr("x", function (d, i) { return i * barXSpacing; })
+            .attr("y", 0)
+            .attr("width", function(d, i) { return barXSpacing -2; })
+            .attr("height", function(d) { return d * barUnitHeight; })
+
+        }); // end of selection.each(...);
+      } // end of function chart(...);
+
+      // SVG Width Getter / Setter
+      chart.svgWidth = function(value) {
+        if (!arguments.length) return svgWidth;
+        svgWidth = value;
+        return chart;
+      };
+
+      // SVG Height Getter / Setter
+      chart.svgHeight = function(value) {
+        if (!arguments.length) return svgHeight;
+        svgHeight = value;
+        return chart;
+      };
+
+      // Return Chart function for method chaining
+      return chart;
+    }
+    </script>
+  </head>
+  <body></body>
+</html>
