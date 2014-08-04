@@ -513,7 +513,7 @@ $(function(){
   $chartlegend.append($('<h4>').html("Sublime Packages Chart Legend")); 
 
   $legend = $('<ul>').addClass('legend');
-  $legendheader = $('<li>').html("Unique installs").css({'font-size':'14px','color':'gray'});
+  $legendheader = $('<li>').html("Popularity by unique installs").css({'font-size':'14px','color':'gray'});
   $legend.append($legendheader);
   $legend1 = $('<li>').html("<span style='background-color:red'>red:</span> > 2,000,000");
   $legend.append($legend1);
