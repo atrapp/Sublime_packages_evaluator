@@ -1,3 +1,12 @@
+// *********************************
+// *****   global variables   ******
+// *********************************
+
+var packageCollection = new PackageCollection(); 
+
+
+
+
 SublimePackagesEvaluator.initialize = function(){
 
 
@@ -380,7 +389,10 @@ PackageCollection.prototype.removeAll = function(){
   return this;
 }
 
+// ****************************************************
 // ************ Get Packages from Sublime *************
+// ****************************************************
+
 PackageCollection.prototype.fetch = function(packageName){
   var that = this;
   $.ajax({
@@ -389,30 +401,36 @@ PackageCollection.prototype.fetch = function(packageName){
     success: function(data){
       if (data == '') {
         that.removeAll();             
-      };  
+      };     
       for (idx in data){         
         that.add(data[idx]);
-      }      
+      };     
+      bubbleChart();
+      pieChart();
+      barChart();
     }
   })
 };
 
+
 PackageCollection.prototype.fetchTop25 = function(){
-  console.log("in fetchTop25");
   var that = this;
   $.ajax({
     url: '/gettop25',
     dataType: 'json',
-    success: function(data){      
+    success: function(data){         
       for (idx in data){         
         that.add(data[idx]);
-      }
+      }     
+      bubbleChart();
+      pieChart();
+      barChart();
     }
   })
 };
 
-function clearAndDisplayPackageList(searchPackageName){
 
+function clearAndDisplayPackageList(searchPackageName){
   resultsText = searchPackageName || '';
 
   var packagesTotal = 0; 
@@ -431,87 +449,44 @@ function clearAndDisplayPackageList(searchPackageName){
     $('.packages-total').html('<p>'+packagesTotal+' results for "' + resultsText + '"</p>');
   };
   
-    // ************   D3 Visualization ************
+    // *****   D3 Visualization   *****
     packages = new Array;
     Object.keys(packageCollection.models).forEach(function (key) {         
         packages.push(packageCollection.models[key]);       
-      });   
-
-    // removeSvg();    
-    // buildSvg();
-    // bubbleChart();
-    // // bubbleChartRadius();
-    // barChart();
-
-    // removeSvgBubbleChart(); 
-    // buildSvgBubbleChart();
-   bubbleChart2();
-
-    // removeSvgBubbleChartRadius();
-    // buildSvgBubbleChartRadius();
-    // bubbleChartRadius2();
-
-        pieChart();
-
-    // removeSvgBarChart();
-    // buildSvgBarChart();
-    barChart2();
-    // ********************************************
+      });
+    // ********************************
 }
 
-function clearPackageList(searchPackageName){
 
+function clearPackageList(searchPackageName){
   var packagesTotal = 0; 
   packageCollection.models = {};
   
   $('.packages').html('No packages found.');
   $('.packages-total').html('<p>'+packagesTotal+' results for "' + searchPackageName + '"</p>'); 
   
-    // ************   D3 Visualization ************
+    // *****   D3 Visualization   *****
     packages = new Array;
     Object.keys(packageCollection.models).forEach(function (key) {         
         packages.push(packageCollection.models[key]);       
-      });   
-
-    // removeSvg();    
-    // buildSvg();
-    // bubbleChart();
-    // // bubbleChartRadius();
-    // barChart();
-
-    //removeSvgBubbleChart(); 
-    // buildSvgBubbleChart();
-   bubbleChart2();
-
-    // removeSvgBubbleChartRadius();
-    // buildSvgBubbleChartRadius();
-    // bubbleChartRadius2();
-
-    pieChart();
-
-    //removeSvgBarChart();
-    // buildSvgBarChart();
-    barChart2();
-    // ********************************************
+      });
+    // ********************************
 }
 
-
-var packageCollection = new PackageCollection(); 
  
-
-//**************************************************
-
+// ******************************
+// *****   document ready   *****
+//*******************************
 
 $(function(){
 
-
   SublimePackagesEvaluator.initialize();
+  packageCollection.fetchTop25();
 
   reviewForm = $('form.review-form');
   reviewForm.hide();
 
-  var reviewsList = $('.reviews');
-  // reviewsList.hide();
+  var reviewsList = $('.reviews');  
 
   var searchPackageName;
 
@@ -525,32 +500,14 @@ $(function(){
   
   $(packageCollection).on('addFlare', function(){
     clearAndDisplayPackageList(searchPackageName);
-      //   removeSvg();
-      // buildSvg();  
-      //   bubbleChart();
-
-    // removeSvgBubbleChart(); 
-    // buildSvgBubbleChart();
-    // bubbleChart2();
   })
 
   $(packageCollection).on('noFlares', function(){
-    clearPackageList(searchPackageName);
-      //   removeSvg();
-      // buildSvg();  
-      //   bubbleChart();
-
-    // removeSvgBubbleChart(); 
-    // buildSvgBubbleChart();
-    // bubbleChart2();
+    clearPackageList(searchPackageName);    
   })
 
-  // *******************************
-  // *****  D3 Visualization   *****
-  // *******************************
+  // *****   D3 Visualization   *****
   
-  packageCollection.fetchTop25();
-
   // *****   chart legend   *****
   $chartlegend = $('#d3chartlegend');
   $chartlegend.append($('<h4>').html("Sublime Packages Chart Legend")); 
@@ -577,18 +534,17 @@ $(function(){
 
   // *****   bubblechart   *****
   $('#d3bubblechart').append($('<h4>').html("Sublime Packages Bubble Chart"));
-
-  // *****   bubblechartradius   *****
-  $('#d3bubblechartradius').append($('<h4>').html("Sublime Packages Bubble Chart by Radius"));
-
-  // *****   barchartchart   *****
-  $('#d3barchart').append($('<h4>').html("Sublime Packages Bar Chart"));
-
-  // buildSvg();
   buildSvgBubbleChart();
-  // buildSvgBubbleChartRadius();
-  buildSvgPieChart();
+  
+  // *****   barchart   *****
+  $('#d3barchart').append($('<h4>').html("Sublime Packages Bar Chart"));  
   buildSvgBarChart();
+
+  // *****   piechart   *****
+  $('#d3piechart').append($('<h4>').html("Sublime Packages Pie Chart"));
+  buildSvgPieChart();
+
+  // ********************************
   
 })
 

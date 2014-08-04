@@ -63,6 +63,10 @@ h4 {
   padding: 10px;
 }
 
+h5 {
+  padding-left: 10px;
+}
+
 small {
   color: #101010 !important;
 }
@@ -210,9 +214,8 @@ ul li {
 #d3chartlegend {
   float: right;
   width: 500px;
-  height: 300px;
+  height: 280px;
   margin: 20px;
-  background: white;  
   border: 1px solid black;
 }
 
@@ -222,17 +225,6 @@ ul li {
   width: 500px;
   height: 500px;
   margin: 20px;
-  background: white;  
-  border: 1px solid black;
-}
-
-#d3bubblechartradius {
-  clear: right;
-  float: right;
-  width: 500px;
-  height: 500px;
-  margin: 20px;
-  background: white;  
   border: 1px solid black;
 }
 
@@ -241,8 +233,7 @@ ul li {
   float: right;
   width: 500px;
   height: 500px;
-  margin: 20px;
-  background: white;  
+  margin: 20px; 
   border: 1px solid black;
 }
 
@@ -252,7 +243,6 @@ ul li {
   width: 500px;
   height: 500px;
   margin: 20px;
-  background: white;  
   border: 1px solid black;
 }
 
