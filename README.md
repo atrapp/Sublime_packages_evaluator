@@ -27,26 +27,41 @@ In an overview this app provides the following features:
 To write a review you need to login. For testing purposes just click "LogIn" and log in as "user@test.com".  
 
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/project3.jpg "About Sublime Packages Evaluator")
+
 Image: About Sublime Packages Evaluator
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe2.png "Search Sublime Packages Evaluator")
+
 Image: Search Sublime Packages 
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe3.png "Reviews")
+
 Image: Reviews
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe4.png "Sublime Packages Chart Legend")
+
+
 Image: Sublime Packages Chart Legend
 
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe5.png "Sublime Packages Bubble Chart")
+
 Image: Sublime Packages Bubble Chart
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe6.png "Sublime Packages Pie Chart")
+
 Image: Sublime Packages Pie Chart
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe7.png "Sublime Packages Bar Chart")
+
 Image: Sublime Packages Bar Chart
 
+
 ![image](https://raw.githubusercontent.com/atrapp/Sublime_packages_evaluator/master/app/assets/images/spe8.png "Write a review")
+
 Image: Write a review
 
