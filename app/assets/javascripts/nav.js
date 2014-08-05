@@ -1,29 +1,51 @@
-$(function(){
+var App = {
+  Router: null,
+  initialize: function(){   
+    this.router = new App.Router();   
+    Backbone.history.start();
+  }
+}
+
+App.Router = Backbone.Router.extend({
  
-  $(".home-menu").addClass("active");
+  routes : {   
+    'about'     : 'about',
+    'search'    : 'search',    
+    'contact'   : 'contact'
+  },
 
-  function scrollToAnchor(anchor){
-   // var aTag = $("div[name='"+ anchor +"']");
-   var aTag = $("#"+ anchor +"-block");
-   $('html,body').animate({scrollTop: aTag.offset().top},'slow');   
-  };
+  about: function(){   
+      removeActiveClass();
+      $(".about-menu").addClass("active");   
+      scrollToAnchor('about');  
+  },
 
-  function removeActiveClass(){
-    $(".home-menu").removeClass("active");   
-    $(".search-menu").removeClass("active");
-    $(".contact-menu").removeClass("active");
-  };
+  search: function(){   
+      removeActiveClass();
+      $(".search-menu").addClass("active");   
+      scrollToAnchor('search');   
+  },
 
-  $(".home-menu").click(function() {
-    removeActiveClass();
-    $(".home-menu").addClass("active");   
-    scrollToAnchor('home');
-  });
+  contact: function(){  
+      removeActiveClass();
+      $(".contact-menu").addClass("active");   
+      scrollToAnchor('contact');   
+  }
 
-  $(".search-menu").click(function() {
-    removeActiveClass();
-    $(".search-menu").addClass("active");   
-    scrollToAnchor('search');
-  });
+})
+ 
+function removeActiveClass(){ 
+  $(".about-menu").removeClass("active");
+  $(".search-menu").removeClass("active"); 
+  $(".contact-menu").removeClass("active");
+}
 
+function scrollToAnchor(anchor){  
+  var aTag = $("#"+ anchor +"-block");
+  $('html,body').animate({scrollTop: aTag.offset().top},'slow');   
+}
+
+
+$(function(){
+  App.initialize();
 })

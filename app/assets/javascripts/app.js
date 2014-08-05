@@ -2,34 +2,18 @@
 // *****   global variables   ******
 // *********************************
 
+window.SublimePackagesEvaluator = {
+  Models: {},
+  Collections: {},
+  Views: {},
+  Routers: {},
+};
+
 var packageCollection = new PackageCollection(); 
-
-
 
 
 SublimePackagesEvaluator.initialize = function(){
 
-
-  //************************
-  // ******   USER    ******
-  //************************
-  // var userCollection = new SublimePackagesEvaluator.Collections.Users();
-
-  // var userListView = new SublimePackagesEvaluator.Views.UserListView({
-  //   collection: userCollection,
-  //   el: $('.users') 
-  // });
-
-  // userCollection.fetch(); 
-
-  // $('form.user-form').on('submit', function(e){
-  //   e.preventDefault();
-  //   var emailField = $("form.user-form input[name='user-email'")
-  //   var newEmail = emailField.val();
-  //   emailField.val('');
-  
-  //   userCollection.create({email: newEmail});   
-  // });
 
   //***************************
   // ******   REVIEWS    ******
