@@ -15,9 +15,9 @@ var packageCollection = new PackageCollection();
 SublimePackagesEvaluator.initialize = function(){
 
 
-  //***************************
-  // ******   REVIEWS    ******
-  //***************************
+  //*************************************
+  // ******   REVIEWS  (backbone)  ******
+  //*************************************
   var reviewCollection = new SublimePackagesEvaluator.Collections.Reviews();
 
   var reviewListView = new SublimePackagesEvaluator.Views.ReviewListView({
@@ -95,12 +95,11 @@ SublimePackagesEvaluator.initialize = function(){
   
 }; // end of SublimePackagesEvaluator.initialize 
 
-//***************************
-// ******   SUBLIME    ******
-//***************************
 
+// *********************
+// *****   Model   *****
+// *********************
 
-// ************ Model *************
 function Package(packageJSON){
   this.name = packageJSON.name;
   if (packageJSON.highlighted_description) {
@@ -116,7 +115,10 @@ function Package(packageJSON){
   // this.rating = "";  
 }
 
-// ************ View *************
+// ********************
+// *****   View   *****
+// ********************
+
 function PackageView(model){
   this.model = model;
   this.el = undefined;
@@ -148,62 +150,14 @@ PackageView.prototype.render = function(){
 
   $reviewsTotal.append($starDiv);
   newPackage.append($reviewsTotal);
-
   
-  if (reviewsCount > 0) { 
+  if (reviewsCount > 0) {
 
+    packageRating(this, $starDiv, reviewsCount);
 
-    // ***** Package Rating *****
- 
+    $.each(this.model.reviews, function(idx, ele) {
 
-    // function packageRating() {
-     
-      var packageRating = 0;
-     
-      //$.each(this.model.reviews, function(idx, ele){
-      $.each($package.model.reviews, function(idx, ele){
-        packageRating = packageRating + parseInt(ele.rating);    
-      });
-
-      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
-      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
-
-      var stars = 5;
-      
-      for (i=0;i< packageRatingAvgR;i++) {      
-        var $star = $('<i>').addClass("fa fa-star fa-2x");
-        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");        
-        $starDiv.append($star);  
-        stars--;
-      };
-
-      if ( (packageRating%reviewsCount) != 0 ) {
-        var $star = $('<i>').addClass("fa fa-star-half-o");
-        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");       
-        $starDiv.append($star);  
-        stars--;
-      };
-
-      while (stars > 0) {
-        var $star = $('<i>').addClass("fa fa-star-o");
-        $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");      
-        $starDiv.append($star);       
-        stars--;
-      }
-    
-      // don't display right now:
-      // var packageRatingText = packageRatingAvg.toString();   
-      // var packageRatingTotal = $('<h4>').attr('id', $package.model.name.replace(/\s+/g, '-') + "_packageRatingTotal").html(packageRatingText);
-      // newPackage.append(packageRatingTotal); 
-
-    // }
-
-    //***** END Package Rating *****
-
-    // $.each(this.model.reviews, function(idx, ele){
-    $.each($package.model.reviews, function(idx, ele){
-
-      // *****   delete review   ****** 
+      // *****   add delete button to review (if author) and delete review if button is clicked  ****** 
       deleteButton = '';       
  
       if (window.currentUser && window.currentUser.id == ele.user_id) { 
@@ -211,87 +165,46 @@ PackageView.prototype.render = function(){
         
         deleteButton.on('click', function(e){
           var $reviewEl = $(e.target.parentElement);         
-          e.preventDefault();
-
-         
+          e.preventDefault();        
 
           $.ajax({   
             url: '/reviews/'+ele.id,
             type: 'DELETE',
             dataType: 'json',
+            success: function(data) {
+              $reviewEl.hide();
 
-            success: function(data) {              
+              // get the index of the just deleted review !!
+              var indexOfDeletedReview = $package.model.reviews.map(function(el) {
+                return el.id;
+              }).indexOf(data.id);
 
-                $reviewEl.hide();
+              $package.model.reviews.splice(indexOfDeletedReview, 1);               
 
+              var reviewsCount = $package.model.reviews.length;  
+              var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
+              var $reviewsTotal = $('.' + $package.model.name.replace(/\s+/g, '-') + '_reviewsTotal');   
 
-  // get the index of the just deleted review !!
-  var indexOfDeletedReview = $package.model.reviews.map(function(el) {
-    return el.id;
-  }).indexOf(data.id);                              
-  $package.model.reviews.splice(indexOfDeletedReview, 1);    
-               
+              var $starDiv = $('div.' + $package.model.name.replace(/\s+/g, '-') + "_stars");
+              $starDiv.remove(); // remove all stars
+              var $starDiv = $('<div>').addClass($package.model.name.replace(/\s+/g, '-') + "_stars");
 
-  var reviewsCount = $package.model.reviews.length;  
-  var reviewsTitleText = reviewsCount + ' Reviews for ' + $package.model.name;
-  var $reviewsTotal = $('.' + $package.model.name.replace(/\s+/g, '-') + '_reviewsTotal');   
+              $reviewsTotal.html(reviewsTitleText);
 
-  var $starDiv = $('div.' + $package.model.name.replace(/\s+/g, '-') + "_stars");
-  $starDiv.remove();
-  var $starDiv = $('<div>').addClass($package.model.name.replace(/\s+/g, '-') + "_stars");
+              var packageRatingTotal = $('#' + $package.model.name.replace(/\s+/g, '-') + '_packageRatingTotal'); 
+              packageRatingTotal.html(0);
 
-  $reviewsTotal.html(reviewsTitleText);
-
-  var packageRatingTotal = $('#' + $package.model.name.replace(/\s+/g, '-') + '_packageRatingTotal'); 
-  packageRatingTotal.html(0);  
-
-
-  if (reviewsCount > 0) {
-    
-      var packageRating = 0
- 
-      //$.each(this.model.reviews, function(idx, ele){
-        
-      $.each($package.model.reviews, function(idx, ele){
-        packageRating = packageRating + parseInt(ele.rating);    
-      });
-
-      var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
-      var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
-
-      var stars = 5;
-      for (i=0;i< packageRatingAvgR;i++) {       
-        $starDiv.append('<i class="fa fa-star fa-2x"></i>');     
-        stars--;
-      };
-
-      if ( (packageRating%reviewsCount) != 0 ) {      
-        $starDiv.append('<i class="fa fa-star-half-o"></i>');   
-        stars--;
-      };
-
-      while (stars > 0) {        
-        $starDiv.append('<i class="fa fa-star-o"></i>');
-        stars--;
-      }
-      // don't display right now
-      // var packageRatingText = packageRatingAvg.toString();      
-      // packageRatingTotal.html(packageRatingText); 
-
-      $reviewsTotal.append($starDiv);
-    }
-
-
-                },
+              if (reviewsCount > 0) {
+                packageRating($package, $starDiv, reviewsCount);
+                $reviewsTotal.append($starDiv);
+              }
+            },
             error: function(xhr, textStatus, errorThrown) {
                 console.log("Error in Operation 'Delete Review'");
-                }    
-          })
-        })
-
-      } 
-      // *****   END delete review   ****** 
-
+            }    
+          }) // end ajax
+        }) // end deleteButton
+      } // end if (window.currentUser ...) 
 
       // *****   create the reviews list   ****** 
       var reviewsItem = $('<li>');
@@ -315,7 +228,7 @@ PackageView.prototype.render = function(){
 
     reviewsList.hide();
     
-    // *****   show/hide reviews   ******
+    // *****   show/hide reviews button  ******
     var showHideReviewsButton = $('<button>Show/Hide Reviews</button>').addClass('package-button');
     showHideReviewsButton.on('click', function(){
       reviewForm.hide('slow');
@@ -323,9 +236,8 @@ PackageView.prototype.render = function(){
     });
   
     newPackage.append(showHideReviewsButton); 
-    // packageRating();
 
-  }; // if (reviewsCount > 0)
+  }; // end if (reviewsCount > 0)
 
 
   // *****   write review   ****** 
@@ -341,12 +253,9 @@ PackageView.prototype.render = function(){
       $(this).parent().append(reviewForm);
     });
 
-    newPackage.append(writeReviewButton);
-
-    
+    newPackage.append(writeReviewButton);    
   }  
   
-
   // *****   return this package   *****
   newPackage.append(reviewsList);
 
@@ -354,12 +263,17 @@ PackageView.prototype.render = function(){
   return this;
 }
 
-// ************ Collection *************
+
+// **************************
+// *****   Collection   *****
+// **************************
+
 function PackageCollection(){
   this.models = {};
 }
 
-// ************ Add Package to Collection *************
+// *****   Add Package to Collection   *****
+
 PackageCollection.prototype.add = function(packageJSON){
   var newPackage = new Package(packageJSON);
   this.models[packageJSON.name] = newPackage;
@@ -367,15 +281,17 @@ PackageCollection.prototype.add = function(packageJSON){
   return this;
 }
 
-// ************ Remove all Packages from Collection *************
+// *****   Remove all Packages from Collection   *****
+
 PackageCollection.prototype.removeAll = function(){
   $(this).trigger('noFlares');
   return this;
 }
 
-// ****************************************************
-// ************ Get Packages from Sublime *************
-// ****************************************************
+
+// *****************************************
+// *****   Get Packages from Sublime   *****
+// *****************************************
 
 PackageCollection.prototype.fetch = function(packageName){
   var that = this;
@@ -396,7 +312,6 @@ PackageCollection.prototype.fetch = function(packageName){
   })
 };
 
-
 PackageCollection.prototype.fetchTop25 = function(){
   var that = this;
   $.ajax({
@@ -412,6 +327,46 @@ PackageCollection.prototype.fetchTop25 = function(){
     }
   })
 };
+
+
+// *************************
+// *****   functions   *****
+// *************************
+
+function packageRating($package, $starDiv, reviewsCount) {
+ 
+  var packageRating = 0;
+ 
+  $.each($package.model.reviews, function(idx, ele){
+    packageRating = packageRating + parseInt(ele.rating);    
+  });
+
+  var packageRatingAvg = Math.round((packageRating/reviewsCount) * 100) / 100;
+  var packageRatingAvgR = Math.floor(packageRating/reviewsCount);
+
+  var stars = 5;
+  
+  for (i=0;i< packageRatingAvgR;i++) {      
+    var $star = $('<i>').addClass("fa fa-star fa-2x");
+    $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");        
+    $starDiv.append($star);  
+    stars--;
+  };
+
+  if ( (packageRating%reviewsCount) != 0 ) {
+    var $star = $('<i>').addClass("fa fa-star-half-o");
+    $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");       
+    $starDiv.append($star);  
+    stars--;
+  };
+
+  while (stars > 0) {
+    var $star = $('<i>').addClass("fa fa-star-o");
+    $star.addClass($package.model.name.replace(/\s+/g, '-') + "_star");      
+    $starDiv.append($star);       
+    stars--;
+  }
+}
 
 
 function clearAndDisplayPackageList(searchPackageName){
@@ -437,8 +392,7 @@ function clearAndDisplayPackageList(searchPackageName){
     packages = new Array;
     Object.keys(packageCollection.models).forEach(function (key) {         
         packages.push(packageCollection.models[key]);       
-      });
-    // ********************************
+      });    
 }
 
 
@@ -453,14 +407,13 @@ function clearPackageList(searchPackageName){
     packages = new Array;
     Object.keys(packageCollection.models).forEach(function (key) {         
         packages.push(packageCollection.models[key]);       
-      });
-    // ********************************
+      });    
 }
 
  
-// ******************************
-// *****   document ready   *****
-//*******************************
+// **********************************************
+// *****   Main function (document ready)   *****
+//***********************************************
 
 $(function(){
 
@@ -490,7 +443,9 @@ $(function(){
     clearPackageList(searchPackageName);    
   })
 
+  // ********************************
   // *****   D3 Visualization   *****
+  // ********************************
   
   // *****   chart legend   *****
   $chartlegend = $('#d3chartlegend');
@@ -519,16 +474,14 @@ $(function(){
   // *****   bubblechart   *****
   $('#d3bubblechart').append($('<h4>').html("Sublime Packages Bubble Chart"));
   buildSvgBubbleChart();
+
+  // *****   piechart   *****
+  $('#d3piechart').append($('<h4>').html("Sublime Packages Pie Chart"));
+  buildSvgPieChart();
   
   // *****   barchart   *****
   $('#d3barchart').append($('<h4>').html("Sublime Packages Bar Chart"));  
   buildSvgBarChart();
 
-  // *****   piechart   *****
-  $('#d3piechart').append($('<h4>').html("Sublime Packages Pie Chart"));
-  buildSvgPieChart();
-
-  // ********************************
-  
 })
 
